@@ -4,6 +4,10 @@
     -fx-background-repeat: no-repeat;
 }
 
-.welcome2 {
+.menubar {
     -fx-background-color: linear-gradient(to bottom right, #2d658c, #2ca772);
+}
+
+.content {
+    -fx-background-color: #d9d9d9;
 }

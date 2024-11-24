@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="750.0" maxWidth="1000.0" minHeight="750.0" minWidth="1000.0" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="750.0" maxWidth="1000.0" minHeight="750.0" minWidth="1000.0" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsgenie2409084.RegistrationPageController">
    <children>
       <AnchorPane centerShape="false" maxHeight="750.0" maxWidth="300.0" minHeight="750.0" minWidth="300.0" prefHeight="750.0" prefWidth="300.0" styleClass="menubar" stylesheets="@Styles.css" StackPane.alignment="TOP_LEFT">
          <children>
@@ -18,7 +18,7 @@
                   <Font name="Apple SD Gothic Neo ExtraBold" size="35.0" />
                </font>
             </Label>
-            <Button layoutX="75.0" layoutY="614.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Back to Sign In" />
+            <Button fx:id="BackToSignIn" layoutX="75.0" layoutY="614.0" mnemonicParsing="false" onAction="#backToSignIn" prefHeight="30.0" prefWidth="150.0" text="Back to Sign In" />
          </children></AnchorPane>
       <AnchorPane maxHeight="750.0" maxWidth="700.0" minHeight="750.0" minWidth="700.0" prefHeight="750.0" prefWidth="700.0" styleClass="content" stylesheets="@Styles.css" StackPane.alignment="TOP_RIGHT">
          <children>
@@ -27,90 +27,90 @@
                   <Font name="Apple SD Gothic Neo Bold" size="18.0" />
                </font>
             </Label>
-            <TextField layoutX="302.0" layoutY="84.0" prefHeight="26.0" prefWidth="307.0" />
+            <TextField fx:id="usernameField" layoutX="302.0" layoutY="84.0" prefHeight="26.0" prefWidth="307.0" promptText="Please enter your desired password." />
             <Label layoutX="47.0" layoutY="160.0" prefHeight="25.0" prefWidth="221.0" text="Password                :">
                <font>
                   <Font name="Apple SD Gothic Neo Bold" size="18.0" />
                </font>
             </Label>
-            <PasswordField layoutX="302.0" layoutY="159.0" prefHeight="26.0" prefWidth="307.0" />
+            <PasswordField fx:id="passwordField" layoutX="302.0" layoutY="159.0" prefHeight="26.0" prefWidth="307.0" promptText="Please create a secure password." />
             <Label layoutX="47.0" layoutY="235.0" prefHeight="25.0" prefWidth="221.0" text="Confirm Password  :">
                <font>
                   <Font name="Apple SD Gothic Neo Bold" size="18.0" />
                </font>
             </Label>
-            <PasswordField layoutX="302.0" layoutY="234.0" prefHeight="26.0" prefWidth="307.0" />
+            <PasswordField fx:id="confirmPasswordField" layoutX="302.0" layoutY="234.0" prefHeight="26.0" prefWidth="307.0" promptText="Please re-enter your password." />
             <Label layoutX="47.0" layoutY="310.0" text="Preferences :">
                <font>
                   <Font name="Apple SD Gothic Neo Bold" size="18.0" />
                </font>
             </Label>
-            <RadioButton layoutX="68.0" layoutY="365.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Health">
+            <RadioButton fx:id="healthRadio" layoutX="68.0" layoutY="365.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Health">
                <font>
                   <Font name="Apple SD Gothic Neo Bold" size="15.0" />
                </font>
             </RadioButton>
-            <RadioButton layoutX="215.0" layoutY="365.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Technology">
+            <RadioButton fx:id="technologyRadio" layoutX="215.0" layoutY="365.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Technology">
                <font>
                   <Font name="Apple SD Gothic Neo Bold" size="15.0" />
                </font>
             </RadioButton>
-            <RadioButton layoutX="365.0" layoutY="365.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Politics">
+            <RadioButton fx:id="politicsRadio" layoutX="365.0" layoutY="365.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Politics">
                <font>
                   <Font name="Apple SD Gothic Neo Bold" size="15.0" />
                </font>
             </RadioButton>
-            <RadioButton layoutX="515.0" layoutY="365.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Business">
+            <RadioButton fx:id="businessRadio" layoutX="515.0" layoutY="365.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Business">
                <font>
                   <Font name="Apple SD Gothic Neo Bold" size="15.0" />
                </font>
             </RadioButton>
-            <RadioButton layoutX="68.0" layoutY="419.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Science">
+            <RadioButton fx:id="scienceRadio" layoutX="68.0" layoutY="419.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Science">
                <font>
                   <Font name="Apple SD Gothic Neo Bold" size="15.0" />
                </font>
             </RadioButton>
-            <RadioButton layoutX="215.0" layoutY="419.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" prefWidth="71.0" text="Sports">
+            <RadioButton fx:id="sportRadio" layoutX="215.0" layoutY="419.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" prefWidth="71.0" text="Sports">
                <font>
                   <Font name="Apple SD Gothic Neo Bold" size="15.0" />
                </font>
             </RadioButton>
-            <RadioButton layoutX="365.0" layoutY="419.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Entertainment">
+            <RadioButton fx:id="entertainmentRadio" layoutX="365.0" layoutY="419.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Entertainment">
                <font>
                   <Font name="Apple SD Gothic Neo Bold" size="15.0" />
                </font>
             </RadioButton>
-            <RadioButton layoutX="515.0" layoutY="419.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Environment">
+            <RadioButton fx:id="environmentRadio" layoutX="515.0" layoutY="419.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Environment">
                <font>
                   <Font name="Apple SD Gothic Neo Bold" size="15.0" />
                </font>
             </RadioButton>
-            <RadioButton layoutX="68.0" layoutY="473.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Crime">
+            <RadioButton fx:id="crimeRadio" layoutX="68.0" layoutY="473.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Crime">
                <font>
                   <Font name="Apple SD Gothic Neo Bold" size="15.0" />
                </font>
             </RadioButton>
-            <RadioButton layoutX="215.0" layoutY="473.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Education">
+            <RadioButton fx:id="educationRadio" layoutX="215.0" layoutY="473.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Education">
                <font>
                   <Font name="Apple SD Gothic Neo Bold" size="15.0" />
                </font>
             </RadioButton>
-            <RadioButton layoutX="365.0" layoutY="471.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Weather">
+            <RadioButton fx:id="weatherRadio" layoutX="365.0" layoutY="471.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Weather">
                <font>
                   <Font name="Apple SD Gothic Neo Bold" size="15.0" />
                </font>
             </RadioButton>
-            <RadioButton layoutX="515.0" layoutY="471.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Lifestyle">
+            <RadioButton fx:id="otherRadio" layoutX="515.0" layoutY="471.0" minHeight="22.0" minWidth="124.0" mnemonicParsing="false" text="Other">
                <font>
                   <Font name="Apple SD Gothic Neo Bold" size="15.0" />
                </font>
             </RadioButton>
-            <Button layoutX="128.0" layoutY="612.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="175.0" text="Rest">
+            <Button fx:id="resetButton" layoutX="128.0" layoutY="612.0" mnemonicParsing="false" onAction="#handleResetRegistration" prefHeight="30.0" prefWidth="175.0" text="Reset">
                <font>
                   <Font name="Apple SD Gothic Neo Bold" size="15.0" />
                </font>
             </Button>
-            <Button defaultButton="true" layoutX="402.0" layoutY="612.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="175.0" text="Sign Up">
+            <Button fx:id="signUpButton" defaultButton="true" layoutX="402.0" layoutY="612.0" mnemonicParsing="false" onAction="#handleSignUp" prefHeight="30.0" prefWidth="175.0" text="Sign Up">
                <font>
                   <Font name="Apple SD Gothic Neo Bold" size="15.0" />
                </font>

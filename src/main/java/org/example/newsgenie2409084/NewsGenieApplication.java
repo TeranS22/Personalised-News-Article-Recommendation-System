@@ -10,9 +10,9 @@ import java.io.IOException;
 public class NewsGenieApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(NewsGenieApplication.class.getResource("WelcomePage.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("WelcomePage.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 750);
-        stage.setTitle("Personalised News Article Recommendation Application");
+        stage.setTitle("Personalized News Article Recommendation Application");
         stage.setScene(scene);
         stage.show();
     }

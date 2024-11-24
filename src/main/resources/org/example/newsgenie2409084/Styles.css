@@ -1,13 +1,13 @@
 .welcome {
-    -fx-background-image: url("Images/WelcomePage.png");
+    -fx-background-image: url("Images/WelcomePage.jpg");
     -fx-background-size: 100% 100%;
     -fx-background-repeat: no-repeat;
 }
 
 .menubar {
-    -fx-background-color: linear-gradient(to bottom right, #2d658c, #2ca772);
+    -fx-background-color: linear-gradient(to bottom right, #ec5818, #f5006e);
 }
 
 .content {
-    -fx-background-color: #d9d9d9;
+    -fx-background-color: #F7F8F9;
 }

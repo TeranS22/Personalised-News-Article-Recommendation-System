@@ -21,7 +21,8 @@ public class AdminMenuController {
     public Button LogOut;
 
     public void FetchArticles(ActionEvent event) throws IOException {
-        // gotta put the fetching scenario here
+        SceneLoader.loadScene(event, "ArticleFetcher.fxml");
+
     }
 
     public void directToManageArticles(ActionEvent event) throws IOException {
@@ -29,7 +30,7 @@ public class AdminMenuController {
     }
 
     public void directToManageAccounts(ActionEvent event) throws IOException {
-        SceneLoader.loadScene(event, "ManageAccounts.fxml");
+        SceneLoader.loadScene(event, "ManageUsers.fxml");
     }
 
     public void LogOut(ActionEvent event) throws IOException {

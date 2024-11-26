@@ -54,18 +54,19 @@ public class WelcomePageController {
     }
 
     private boolean checkUserCredentials(String username, String password) {
-        Document user = userCollection.find(Filters.eq("username", username)).first();
+        User user = getUser(username);
 
         if (user == null) {
             System.out.println("User not found for username: " + username);
             return false;
         }
 
-        String storedPassword = user.getString("password");
-        System.out.println("Stored Password: " + storedPassword);
-        System.out.println("Input Password: " + password);
+        return user.getPassword().equals(password);
+    }
 
-        return storedPassword.equals(password);
+    private User getUser(String username) {
+        Document doc = userCollection.find(Filters.eq("username", username)).first();
+        return doc != null ? User.fromDocument(doc) : null;
     }
 
     @FXML

@@ -1,8 +1,9 @@
-package org.example.newsgenie2409084;
+package org.example.newsgenie2409084.Controller.Admin;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import org.example.newsgenie2409084.Util.SceneLoader;
 
 import java.io.IOException;
 
@@ -21,20 +22,20 @@ public class AdminMenuController {
     public Button LogOut;
 
     public void FetchArticles(ActionEvent event) throws IOException {
-        SceneLoader.loadScene(event, "ArticleFetcher.fxml");
+        SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/Admin/ArticleFetcher.fxml");
 
     }
 
     public void directToManageArticles(ActionEvent event) throws IOException {
-        SceneLoader.loadScene(event, "ManageArticles.fxml");
+        SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/Admin/ManageArticles.fxml");
     }
 
     public void directToManageAccounts(ActionEvent event) throws IOException {
-        SceneLoader.loadScene(event, "ManageUsers.fxml");
+        SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/Admin/ManageUsers.fxml");
     }
 
     public void LogOut(ActionEvent event) throws IOException {
-        SceneLoader.loadScene(event, "WelcomePage.fxml");
+        SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/WelcomePage.fxml");
 
     }
 }

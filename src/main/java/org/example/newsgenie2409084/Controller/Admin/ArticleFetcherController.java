@@ -1,14 +1,14 @@
-package org.example.newsgenie2409084;
+package org.example.newsgenie2409084.Controller.Admin;
 
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import org.bson.Document;
+import org.example.newsgenie2409084.Database.DatabaseArticles;
+import org.example.newsgenie2409084.Model.Article;
+import org.example.newsgenie2409084.Service.CategoriseArticles;
+import org.example.newsgenie2409084.Util.SceneLoader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,14 +30,8 @@ public class ArticleFetcherController {
     @FXML
     private TextField confirmTextField;
 
-    private static final MongoCollection<Document> articlesCollection;
-
-    static {
-        MongoDatabase database = MongoClients.create("mongodb://localhost:27017").getDatabase("newsGenie");
-        articlesCollection = database.getCollection("articles");
-    }
-
     private static final String API_KEY = "35e209b1c0b5403ca29d116c65d7ce44";
+    private final DatabaseArticles databaseArticle = new DatabaseArticles();
 
     @FXML
     public void fetchAndSaveArticles(ActionEvent event) {
@@ -52,16 +46,19 @@ public class ArticleFetcherController {
         int articleCount;
         try {
             articleCount = Integer.parseInt(inputNumber);
-            if (articleCount < 10 || articleCount > 100) {
-                showAlert(Alert.AlertType.ERROR, "Error", "Please enter a number between 10 and 100.");
+            if (articleCount < 1 || articleCount > 35) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Please enter a number between 1 and 35.");
                 return;
             }
         } catch (NumberFormatException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Invalid input. Please enter a valid number between 10 and 100.");
+            showAlert(Alert.AlertType.ERROR, "Error", "Invalid input. Please enter a valid number.");
             return;
         }
 
         fetchArticlesFromAPI(articleCount);
+
+        NumberOfArticlesToBeFetched.clear();
+        confirmTextField.clear();
     }
 
     private void fetchArticlesFromAPI(int articleCount) {
@@ -74,7 +71,7 @@ public class ArticleFetcherController {
             connection.setRequestMethod("GET");
 
             int responseCode = connection.getResponseCode();
-            if (responseCode == 200) {
+            if (responseCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder response = new StringBuilder();
                 String line;
@@ -84,10 +81,9 @@ public class ArticleFetcherController {
                 }
                 reader.close();
 
-                String responseString = response.toString();
-                SaveArticles(responseString, articles);
+                saveArticles(response.toString(), articles);
 
-                showAlert(Alert.AlertType.INFORMATION, "Success", articles.size() + " articles were fetched and saved to the database.");
+                showAlert(Alert.AlertType.INFORMATION, "Success", articles.size() + " articles were fetched and saved.");
             } else {
                 showAlert(Alert.AlertType.ERROR, "Error", "Failed to fetch articles. Response Code: " + responseCode);
             }
@@ -97,8 +93,8 @@ public class ArticleFetcherController {
         }
     }
 
-    private void SaveArticles(String response, List<Article> articles) {
-        int idCounter = getMaxArticleId() + 1;
+    private void saveArticles(String response, List<Article> articles) {
+        int idCounter = databaseArticle.getMaxArticleId() + 1;
 
         String[] articleBlocks = response.split("\"articles\":\\[")[1].split("\\],")[0].split("\\},\\{");
 
@@ -107,26 +103,14 @@ public class ArticleFetcherController {
             String preview = extractValue(block, "\"description\":\"");
             String link = extractValue(block, "\"url\":\"");
 
-            CategoriseArticles nlpProcessor = new CategoriseArticles();
-            String category = nlpProcessor.categorize(name, preview);
+            CategoriseArticles categoriser = new CategoriseArticles();
+            String category = categoriser.categorize(name, preview);
 
             Article article = new Article(idCounter++, name, preview, category, link);
             articles.add(article);
 
-            saveToDatabase(article);
+            databaseArticle.saveArticle(article);
         }
-    }
-
-    private void saveToDatabase(Article article) {
-        Document articleDoc = new Document("id", article.getId())
-                .append("name", article.getName())
-                .append("preview", article.getPreview())
-                .append("category", article.getCategory())
-                .append("link", article.getLink());
-
-        articlesCollection.insertOne(articleDoc);
-
-        System.out.println("Saved to database: " + article);
     }
 
     private String extractValue(String block, String key) {
@@ -142,21 +126,9 @@ public class ArticleFetcherController {
         }
     }
 
-    private int getMaxArticleId() {
-        Document maxIdDoc = articlesCollection.find()
-                .sort(new Document("id", -1)) // We are sorting IDs in descending order
-                .limit(1) // And we get the first (which means the highest)
-                .first();
-
-        if (maxIdDoc != null && maxIdDoc.containsKey("id")) {
-            return maxIdDoc.getInteger("id");
-        }
-        return 0;
-    }
-
     @FXML
     public void backToAdminMenu(ActionEvent event) throws IOException {
-        SceneLoader.loadScene(event, "AdminMenu.fxml");
+        SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/Admin/AdminMenu.fxml");
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

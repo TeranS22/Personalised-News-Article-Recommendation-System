@@ -1,4 +1,4 @@
-package org.example.newsgenie2409084;
+package org.example.newsgenie2409084.Service;
 
 import java.util.Arrays;
 import java.util.List;

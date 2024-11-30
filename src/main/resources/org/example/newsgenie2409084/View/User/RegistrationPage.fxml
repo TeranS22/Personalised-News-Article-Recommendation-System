@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="750.0" maxWidth="1000.0" minHeight="750.0" minWidth="1000.0" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsgenie2409084.RegistrationPageController">
+<StackPane maxHeight="750.0" maxWidth="1000.0" minHeight="750.0" minWidth="1000.0" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsgenie2409084.Controller.User.RegistrationPageController">
    <children>
-      <AnchorPane centerShape="false" maxHeight="750.0" maxWidth="300.0" minHeight="750.0" minWidth="300.0" prefHeight="750.0" prefWidth="300.0" styleClass="menubar" stylesheets="@Styles.css" StackPane.alignment="TOP_LEFT">
+      <AnchorPane centerShape="false" maxHeight="750.0" maxWidth="300.0" minHeight="750.0" minWidth="300.0" prefHeight="750.0" prefWidth="300.0" styleClass="menubar" stylesheets="@../../Styles/Styles.css" StackPane.alignment="TOP_LEFT">
          <children>
             <Label layoutX="32.0" layoutY="45.0" text="REGISTRATION" textFill="WHITE">
                <font>
@@ -20,7 +20,7 @@
             </Label>
             <Button fx:id="BackToSignIn" layoutX="75.0" layoutY="614.0" mnemonicParsing="false" onAction="#backToSignIn" prefHeight="30.0" prefWidth="150.0" text="Back to Sign In" />
          </children></AnchorPane>
-      <AnchorPane maxHeight="750.0" maxWidth="700.0" minHeight="750.0" minWidth="700.0" prefHeight="750.0" prefWidth="700.0" styleClass="content" stylesheets="@Styles.css" StackPane.alignment="TOP_RIGHT">
+      <AnchorPane maxHeight="750.0" maxWidth="700.0" minHeight="750.0" minWidth="700.0" prefHeight="750.0" prefWidth="700.0" styleClass="content" stylesheets="@../../Styles/Styles.css" StackPane.alignment="TOP_RIGHT">
          <children>
             <Label layoutX="47.0" layoutY="85.0" prefHeight="25.0" prefWidth="221.0" text="Username               :">
                <font>

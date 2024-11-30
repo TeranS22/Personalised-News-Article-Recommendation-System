@@ -1,23 +1,18 @@
-package org.example.newsgenie2409084;
+package org.example.newsgenie2409084.Controller.User;
 
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.bson.Document;
+import org.example.newsgenie2409084.Database.DatabaseUsers;
+import org.example.newsgenie2409084.Model.User;
+import org.example.newsgenie2409084.Util.AlertUtils;
+import org.example.newsgenie2409084.Util.SceneLoader;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RegistrationPageController {
-
-    @FXML
-    public Button resetButton;
-    @FXML
-    public Button signUpButton;
 
     @FXML
     private TextField usernameField;
@@ -53,12 +48,7 @@ public class RegistrationPageController {
     @FXML
     private RadioButton otherRadio;
 
-    private final MongoCollection<Document> userCollection;
-
-    public RegistrationPageController() {
-        MongoDatabase database = MongoClients.create("mongodb://localhost:27017").getDatabase("newsGenie");
-        this.userCollection = database.getCollection("users");
-    }
+    private final DatabaseUsers databaseUser = new DatabaseUsers();
 
     @FXML
     private void handleSignUp(ActionEvent event) throws IOException {
@@ -67,29 +57,26 @@ public class RegistrationPageController {
         String confirmPassword = confirmPasswordField.getText();
 
         if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            showAlert("Error", "All fields must be filled.");
+            AlertUtils.showError("Error", "All fields must be filled.");
             return;
         }
 
         if (!password.equals(confirmPassword)) {
-            showAlert("Error", "Passwords do not match.");
+            AlertUtils.showError("Error", "Passwords do not match.");
             return;
         }
 
-        if (isUsernameTaken(username)) {
-            showAlert("Error", "Username is already taken.");
+        if (databaseUser.getUserByUsername(username) != null) {
+            AlertUtils.showError("Error", "Username is already taken.");
             return;
         }
 
-        User user = new User(username, password, getUserPreferences(), null);
-        userCollection.insertOne(user.toDocument());
+        String preferences = getUserPreferences();
+        User user = new User(username, password, preferences, null);
+        databaseUser.saveUser(user);
 
-        showAlert("Success", "User registered successfully.");
-        SceneLoader.loadScene(event, "WelcomePage.fxml");
-    }
-
-    private boolean isUsernameTaken(String username) {
-        return userCollection.find(new Document("username", username)).first() != null;
+        AlertUtils.showSuccess("Success", "Registration successful!");
+        SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/WelcomePage.fxml");
     }
 
     private String getUserPreferences() {
@@ -109,21 +96,31 @@ public class RegistrationPageController {
         return String.join(", ", preferences);
     }
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(title.equals("Error") ? Alert.AlertType.ERROR : Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    @FXML
+    private void handleResetRegistration(ActionEvent event) {
+
+        usernameField.clear();
+        passwordField.clear();
+        confirmPasswordField.clear();
+
+        healthRadio.setSelected(false);
+        technologyRadio.setSelected(false);
+        politicsRadio.setSelected(false);
+        businessRadio.setSelected(false);
+        scienceRadio.setSelected(false);
+        sportRadio.setSelected(false);
+        entertainmentRadio.setSelected(false);
+        environmentRadio.setSelected(false);
+        crimeRadio.setSelected(false);
+        educationRadio.setSelected(false);
+        weatherRadio.setSelected(false);
+        otherRadio.setSelected(false);
+
+        AlertUtils.showSuccess("Reset", "All fields have been cleared.");
     }
 
     @FXML
-    private void handleResetRegistration(ActionEvent event) throws IOException {
-        SceneLoader.loadScene(event, "RegistrationPage.fxml");
-    }
-
-    @FXML
-    public void backToSignIn(ActionEvent event) throws IOException {
-        SceneLoader.loadScene(event, "WelcomePage.fxml");
+    private void backToSignIn(ActionEvent event) throws IOException {
+        SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/WelcomePage.fxml");
     }
 }

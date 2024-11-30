@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="750.0" maxWidth="1000.0" minHeight="750.0" minWidth="1000.0" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsgenie2409084.ArticleFetcherController">
+<StackPane maxHeight="750.0" maxWidth="1000.0" minHeight="750.0" minWidth="1000.0" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsgenie2409084.Controller.Admin.ArticleFetcherController">
    <children>
-      <AnchorPane maxHeight="750.0" maxWidth="300.0" minHeight="750.0" minWidth="300.0" prefHeight="750.0" prefWidth="300.0" styleClass="menubar" stylesheets="@Styles.css" StackPane.alignment="TOP_LEFT">
+      <AnchorPane maxHeight="750.0" maxWidth="300.0" minHeight="750.0" minWidth="300.0" prefHeight="750.0" prefWidth="300.0" styleClass="menubar" stylesheets="@../../Styles/Styles.css" StackPane.alignment="TOP_LEFT">
          <children>
             <Label layoutX="36.0" layoutY="45.0" text="Article Fetcher" textFill="WHITE">
                <font>
@@ -19,7 +19,7 @@
             <Button fx:id="BackToAdminMenu" layoutX="75.0" layoutY="614.0" mnemonicParsing="false" onAction="#backToAdminMenu" prefHeight="30.0" prefWidth="150.0" text="Back to Admin Menu" />
          </children>
       </AnchorPane>
-      <AnchorPane maxHeight="750.0" maxWidth="700.0" minHeight="750.0" minWidth="700.0" prefHeight="750.0" prefWidth="700.0" styleClass="content" stylesheets="@Styles.css" StackPane.alignment="TOP_RIGHT">
+      <AnchorPane maxHeight="750.0" maxWidth="700.0" minHeight="750.0" minWidth="700.0" prefHeight="750.0" prefWidth="700.0" styleClass="content" stylesheets="@../../Styles/Styles.css" StackPane.alignment="TOP_RIGHT">
          <children>
             <Label layoutX="88.0" layoutY="420.0" text="To proceed, type 'CONFIRM' and click the 'Fetch' button to fetch and save articles to the system." />
             <TextField fx:id="confirmTextField" alignment="CENTER" layoutX="269.0" layoutY="438.0" promptText="Type 'CONFIRM'" />
@@ -28,7 +28,7 @@
                   <Font name="Apple SD Gothic Neo Heavy" size="20.0" />
                </font>
             </Button>
-            <TextField fx:id="NumberOfArticlesToBeFetched" alignment="CENTER" layoutX="270.0" layoutY="380.0" promptText="Any no. from 10 to 100" />
+            <TextField fx:id="NumberOfArticlesToBeFetched" alignment="CENTER" layoutX="270.0" layoutY="380.0" promptText="Any no. from 1 to 35" />
             <Label layoutX="163.0" layoutY="359.0" text="Please enter the number of articles you want to fetch into the system." />
             <Label layoutX="182.0" layoutY="215.0" text="You will be fetching articles directly from NewsAPI.">
                <font>

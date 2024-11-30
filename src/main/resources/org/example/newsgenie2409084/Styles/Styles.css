@@ -1,0 +1,29 @@
+.welcome {
+    -fx-background-image: url("Images/WelcomePage.jpg");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+}
+
+.menubar {
+    -fx-background-color: linear-gradient(to bottom right, #ec5818, #f5006e);
+}
+
+.menuBG {
+    -fx-background-image: url("Images/MenuBackground.jpg");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+    -fx-border-width: 0 0 0 2px;
+    -fx-border-color: black;
+}
+
+.content {
+    -fx-background-color: #F7F8F9;
+}
+
+.regBG {
+    -fx-background-image: url("Images/RegistrationBackground.jpg");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+    -fx-border-width: 0 0 0 2px;
+    -fx-border-color: black;
+}

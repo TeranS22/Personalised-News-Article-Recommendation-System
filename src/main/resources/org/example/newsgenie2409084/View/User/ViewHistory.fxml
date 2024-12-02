@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="750.0" maxWidth="1000.0" minHeight="750.0" minWidth="1000.0" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsgenie2409084.Controller.User.ViewHistoryController">
+   <children>
+      <AnchorPane maxHeight="750.0" maxWidth="300.0" minHeight="750.0" minWidth="300.0" prefHeight="750.0" prefWidth="300.0" styleClass="menubar" stylesheets="@../../Styles/Styles.css" StackPane.alignment="TOP_LEFT">
+         <children>
+            <Label layoutX="50.0" layoutY="45.0" text="Read History" textFill="WHITE">
+               <font>
+                  <Font name="Apple SD Gothic Neo ExtraBold" size="35.0" />
+               </font>
+            </Label>
+            <Button fx:id="BackToUserMenu" layoutX="75.0" layoutY="614.0" mnemonicParsing="false" onAction="#backToUserMenu" prefHeight="30.0" prefWidth="150.0" text="Back to User Menu" />
+         </children>
+      </AnchorPane>
+      <AnchorPane maxHeight="750.0" maxWidth="700.0" minHeight="750.0" minWidth="700.0" prefHeight="750.0" prefWidth="700.0" styleClass="content" stylesheets="@../../Styles/Styles.css" StackPane.alignment="TOP_RIGHT">
+         <children>
+            <TableView fx:id="UserHistory" layoutX="5.0" layoutY="23.0" maxWidth="690.0" minWidth="690.0" prefHeight="706.0" prefWidth="690.0">
+               <columns>
+                  <TableColumn fx:id="ArticleName" prefWidth="241.0" text="Article Name" />
+                  <TableColumn fx:id="ArticlePreview" prefWidth="352.0" text="Article Preview" />
+                  <TableColumn fx:id="YourRating" prefWidth="68.0" text="Your Rating" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

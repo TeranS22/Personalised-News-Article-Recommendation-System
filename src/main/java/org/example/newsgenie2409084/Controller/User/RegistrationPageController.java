@@ -9,8 +9,7 @@ import org.example.newsgenie2409084.Util.AlertUtils;
 import org.example.newsgenie2409084.Util.SceneLoader;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class RegistrationPageController {
 
@@ -24,31 +23,11 @@ public class RegistrationPageController {
     private PasswordField confirmPasswordField;
 
     @FXML
-    private RadioButton healthRadio;
-    @FXML
-    private RadioButton technologyRadio;
-    @FXML
-    private RadioButton politicsRadio;
-    @FXML
-    private RadioButton businessRadio;
-    @FXML
-    private RadioButton scienceRadio;
-    @FXML
-    private RadioButton sportRadio;
-    @FXML
-    private RadioButton entertainmentRadio;
-    @FXML
-    private RadioButton environmentRadio;
-    @FXML
-    private RadioButton crimeRadio;
-    @FXML
-    private RadioButton educationRadio;
-    @FXML
-    private RadioButton weatherRadio;
-    @FXML
-    private RadioButton otherRadio;
+    private RadioButton healthRadio, technologyRadio, politicsRadio, businessRadio,
+            scienceRadio, sportRadio, entertainmentRadio, environmentRadio,
+            crimeRadio, educationRadio, weatherRadio, otherRadio;
 
-    private final DatabaseUsers databaseUser = new DatabaseUsers();
+    private final DatabaseUsers databaseUsers = new DatabaseUsers();
 
     @FXML
     private void handleSignUp(ActionEvent event) throws IOException {
@@ -66,20 +45,26 @@ public class RegistrationPageController {
             return;
         }
 
-        if (databaseUser.getUserByUsername(username) != null) {
+        if (databaseUsers.getUserByUsername(username) != null) {
             AlertUtils.showError("Error", "Username is already taken.");
             return;
         }
 
-        String preferences = getUserPreferences();
-        User user = new User(username, password, preferences, null);
-        databaseUser.saveUser(user);
+        Map<String, Integer> preferredCategories = initializePreferredCategories();
+
+        List<String> preferences = getUserPreferences();
+        for (String category : preferences) {
+            preferredCategories.put(category, 10);
+        }
+
+        User user = new User(username, password, preferences, preferredCategories, null);
+        databaseUsers.saveUser(user);
 
         AlertUtils.showSuccess("Success", "Registration successful!");
         SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/WelcomePage.fxml");
     }
 
-    private String getUserPreferences() {
+    private List<String> getUserPreferences() {
         List<String> preferences = new ArrayList<>();
         if (healthRadio.isSelected()) preferences.add("Health");
         if (technologyRadio.isSelected()) preferences.add("Technology");
@@ -93,16 +78,24 @@ public class RegistrationPageController {
         if (educationRadio.isSelected()) preferences.add("Education");
         if (weatherRadio.isSelected()) preferences.add("Weather");
         if (otherRadio.isSelected()) preferences.add("Other");
-        return String.join(", ", preferences);
+        return preferences;
+    }
+
+    private Map<String, Integer> initializePreferredCategories() {
+        Map<String, Integer> preferredCategories = new HashMap<>();
+        String[] categories = {"Health", "Technology", "Politics", "Business", "Science", "Sport",
+                "Entertainment", "Environment", "Crime", "Education", "Weather", "Other"};
+        for (String category : categories) {
+            preferredCategories.put(category, 0);
+        }
+        return preferredCategories;
     }
 
     @FXML
     private void handleResetRegistration(ActionEvent event) {
-
         usernameField.clear();
         passwordField.clear();
         confirmPasswordField.clear();
-
         healthRadio.setSelected(false);
         technologyRadio.setSelected(false);
         politicsRadio.setSelected(false);
@@ -115,7 +108,6 @@ public class RegistrationPageController {
         educationRadio.setSelected(false);
         weatherRadio.setSelected(false);
         otherRadio.setSelected(false);
-
         AlertUtils.showSuccess("Reset", "All fields have been cleared.");
     }
 

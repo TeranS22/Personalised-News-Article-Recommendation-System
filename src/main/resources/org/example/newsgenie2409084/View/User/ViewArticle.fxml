@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
+<?import org.controlsfx.control.Rating?>
+
+<StackPane maxHeight="750.0" maxWidth="1000.0" minHeight="750.0" minWidth="1000.0" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsgenie2409084.Controller.User.ViewArticleController">
+   <children>
+      <AnchorPane maxHeight="750.0" maxWidth="300.0" minHeight="750.0" minWidth="300.0" prefHeight="750.0" prefWidth="300.0" styleClass="menubar" stylesheets="@../../Styles/Styles.css" StackPane.alignment="TOP_LEFT">
+         <children>
+            <Label layoutX="67.0" layoutY="45.0" text="All Articles" textFill="WHITE">
+               <font>
+                  <Font name="Apple SD Gothic Neo ExtraBold" size="35.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane maxHeight="750.0" maxWidth="700.0" minHeight="750.0" minWidth="700.0" prefHeight="750.0" prefWidth="700.0" styleClass="content" stylesheets="@../../Styles/Styles.css" StackPane.alignment="TOP_RIGHT">
+         <children>
+            <AnchorPane layoutX="19.0" layoutY="18.0" prefHeight="565.0" prefWidth="662.0" styleClass="preLoadBorder" stylesheets="@../../Styles/Styles.css">
+               <children>
+                  <WebView fx:id="ArticleWebView" layoutX="2.0" layoutY="2.0" maxHeight="561.0" maxWidth="658.0" minHeight="561.0" minWidth="658.0" prefHeight="561.0" prefWidth="658.0" />
+               </children>
+            </AnchorPane>
+            <Rating fx:id="UserRating" layoutX="262.0" layoutY="628.0" onMouseClicked="#ChangeRating" prefHeight="12.0" prefWidth="187.0" rating="0.0" />
+            <Label layoutX="82.0" layoutY="598.0" text="How was this article. Please rate to enable the 'Back to All Articles Table' button.">
+               <font>
+                  <Font name="Apple SD Gothic Neo ExtraBold" size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="BackToAllArticles" defaultButton="true" layoutX="239.0" layoutY="677.0" mnemonicParsing="false" onAction="#backToAllArticles" text="Back to All Articles Table">
+               <font>
+                  <Font name="Apple SD Gothic Neo ExtraBold" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

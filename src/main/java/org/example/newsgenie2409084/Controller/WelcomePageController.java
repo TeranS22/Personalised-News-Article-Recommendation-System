@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import org.example.newsgenie2409084.Database.DatabaseUsers;
 import org.example.newsgenie2409084.Model.User;
 import org.example.newsgenie2409084.Util.AlertUtils;
+import org.example.newsgenie2409084.Util.CurrentUser;
 import org.example.newsgenie2409084.Util.SceneLoader;
 
 import java.io.IOException;
@@ -39,8 +40,10 @@ public class WelcomePageController {
         }
 
         if ("Admin".equals(username) && "admin123".equals(password)) {
+            CurrentUser.setUsername(username);
             SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/Admin/AdminMenu.fxml");
         } else if (checkUserCredentials(username, password)) {
+            CurrentUser.setUsername(username);
             SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/User/UserMenu.fxml");
         } else {
             AlertUtils.showError("Error", "Invalid username or password.");
@@ -57,4 +60,3 @@ public class WelcomePageController {
         SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/User/RegistrationPage.fxml");
     }
 }
-

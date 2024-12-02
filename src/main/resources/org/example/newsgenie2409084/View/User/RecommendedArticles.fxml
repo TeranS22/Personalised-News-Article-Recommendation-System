@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
+<?import org.controlsfx.control.Rating?>
+
+<StackPane maxHeight="750.0" maxWidth="1000.0" minHeight="750.0" minWidth="1000.0" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsgenie2409084.Controller.User.RecommendedArticlesController">
+   <children>
+      <AnchorPane maxHeight="750.0" maxWidth="300.0" minHeight="750.0" minWidth="300.0" prefHeight="750.0" prefWidth="300.0" styleClass="menubar" stylesheets="@../../Styles/Styles.css" StackPane.alignment="TOP_LEFT">
+         <children>
+            <Label layoutX="34.0" layoutY="45.0" text="Recommended" textFill="WHITE">
+               <font>
+                  <Font name="Apple SD Gothic Neo ExtraBold" size="35.0" />
+               </font>
+            </Label>
+            <Label layoutX="92.0" layoutY="87.0" text="Articles" textFill="WHITE">
+               <font>
+                  <Font name="Apple SD Gothic Neo ExtraBold" size="35.0" />
+               </font>
+            </Label>
+            <Button fx:id="BackToUserMenu" layoutX="75.0" layoutY="614.0" maxHeight="30.0" maxWidth="150.0" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#backToUserMenu" prefHeight="30.0" prefWidth="150.0" text="Back to User Menu" />
+         </children>
+      </AnchorPane>
+      <AnchorPane maxHeight="750.0" maxWidth="700.0" minHeight="750.0" minWidth="700.0" prefHeight="750.0" prefWidth="700.0" styleClass="content" stylesheets="@../../Styles/Styles.css" StackPane.alignment="TOP_RIGHT">
+         <children>
+            <TextArea fx:id="ArticleHeading" editable="false" layoutX="169.0" layoutY="13.0" maxHeight="80.0" maxWidth="518.0" minHeight="80.0" minWidth="518.0" prefHeight="80.0" prefWidth="518.0" wrapText="true">
+               <font>
+                  <Font name="American Typewriter Semibold" size="18.0" />
+               </font>
+            </TextArea>
+            <Label layoutX="12.0" layoutY="40.0" text="Article Heading     :">
+               <font>
+                  <Font name="Apple SD Gothic Neo ExtraBold" size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="ArticleCategory" editable="false" layoutX="169.0" layoutY="114.0" prefHeight="26.0" prefWidth="300.0">
+               <font>
+                  <Font name="American Typewriter Semibold" size="18.0" />
+               </font>
+            </TextField>
+            <Label layoutX="12.0" layoutY="118.0" text="Article Category    :">
+               <font>
+                  <Font name="Apple SD Gothic Neo ExtraBold" size="17.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="19.0" layoutY="163.0" prefHeight="420.0" prefWidth="662.0" styleClass="preLoadBorder" stylesheets="@../../Styles/Styles.css">
+               <children>
+                  <WebView fx:id="ArticleWebView" layoutX="2.0" layoutY="2.0" maxHeight="416.0" maxWidth="658.0" minHeight="416.0" minWidth="658.0" prefHeight="416.0" prefWidth="658.0" />
+               </children>
+            </AnchorPane>
+            <Rating fx:id="UserRating" layoutX="262.0" layoutY="657.0" prefHeight="12.0" prefWidth="187.0" rating="0.0" onMouseClicked="#ChangeRating" />
+            <Button fx:id="SkipArticle" layoutX="44.0" layoutY="689.0" maxHeight="30.0" maxWidth="150.0" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#skipArticle" prefHeight="30.0" prefWidth="150.0" text="Skip">
+               <font>
+                  <Font name="Apple SD Gothic Neo ExtraBold" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="NextArticle" layoutX="507.0" layoutY="689.0" maxHeight="30.0" maxWidth="150.0" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#nextArticle" prefHeight="30.0" prefWidth="150.0" text="Next">
+               <font>
+                  <Font name="Apple SD Gothic Neo ExtraBold" size="16.0" />
+               </font>
+            </Button>
+            <Label layoutX="173.0" layoutY="595.0" text="Read the article? Rate it below! Not interested? Click 'Skip.'">
+               <font>
+                  <Font name="Apple SD Gothic Neo SemiBold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="73.0" layoutY="615.0" text="To receive similar articles, click 'Next.' You must provide a rating to enable the 'Next' button.">
+               <font>
+                  <Font name="Apple SD Gothic Neo SemiBold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

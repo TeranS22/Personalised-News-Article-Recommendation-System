@@ -18,7 +18,7 @@
                   <Font name="Apple SD Gothic Neo ExtraBold" size="35.0" />
                </font>
             </Label>
-            <Button fx:id="BackToAdminMenu" layoutX="75.0" layoutY="614.0" mnemonicParsing="false" onAction="#backToAdminMenu" prefHeight="30.0" prefWidth="150.0" text="Back to Admin Menu" />
+            <Button fx:id="BackToAdminMenu" layoutX="75.0" layoutY="614.0" maxHeight="30.0" maxWidth="150.0" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" onAction="#backToAdminMenu" prefHeight="30.0" prefWidth="150.0" text="Back to Admin Menu" />
          </children>
       </AnchorPane>
       <AnchorPane maxHeight="750.0" maxWidth="700.0" minHeight="750.0" minWidth="700.0" prefHeight="750.0" prefWidth="700.0" styleClass="content" stylesheets="@../../Styles/Styles.css" StackPane.alignment="TOP_RIGHT">
@@ -28,15 +28,14 @@
                   <Font name="PT Serif Caption" size="35.0" />
                </font>
             </Label>
-            <TableView fx:id="ManageArticlesTableView" layoutX="5.0" layoutY="65.0" prefHeight="522.0" prefWidth="690.0">
+            <TableView fx:id="ManageArticlesTableView" layoutX="5.0" layoutY="65.0" maxHeight="522.0" maxWidth="690.0" minHeight="522.0" minWidth="690.0" prefHeight="522.0" prefWidth="690.0">
               <columns>
                   <TableColumn fx:id="ArticleID" maxWidth="56.0" minWidth="56.0" prefWidth="56.0" text="Article ID" />
                   <TableColumn fx:id="ArticleHeadline" maxWidth="122.0" minWidth="122.0" prefWidth="122.0" text="Headline" />
                   <TableColumn fx:id="ArticlePreview" maxWidth="194.0" minWidth="194.0" prefWidth="194.0" text="Preview" />
                   <TableColumn fx:id="ArticleCategory" maxWidth="71.0" minWidth="71.0" prefWidth="71.0" text="Category" />
                   <TableColumn fx:id="ArticleLink" maxWidth="146.0" minWidth="146.0" prefWidth="146.0" text="Link" />
-                  <TableColumn fx:id="ArticleThumbsUp" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" text="#👍" />
-                  <TableColumn fx:id="ArticleThumbsDown" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" text="#👎" />
+                  <TableColumn fx:id="ArticleRating" maxWidth="70.0" minWidth="40.0" prefWidth="70.0" text="Avg. Rating" />
               </columns>
             </TableView>
             <Label layoutX="190.0" layoutY="595.0" text="Please select the article you wish to delete from the system." />

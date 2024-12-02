@@ -4,6 +4,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import org.example.newsgenie2409084.Model.Article;
 
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseArticles {
+
     private static final MongoCollection<Document> articlesCollection;
 
     static {
@@ -23,26 +25,49 @@ public class DatabaseArticles {
                 .append("name", article.getName())
                 .append("preview", article.getPreview())
                 .append("category", article.getCategory())
-                .append("link", article.getLink());
+                .append("link", article.getLink())
+                .append("averageRating", article.getAverageRating())
+                .append("ratingCount", article.getRatingCount());
         articlesCollection.insertOne(articleDoc);
     }
 
     public List<Article> getAllArticles() {
         List<Article> articles = new ArrayList<>();
         for (Document doc : articlesCollection.find()) {
-            articles.add(new Article(
-                    doc.getInteger("id"),
-                    doc.getString("name"),
-                    doc.getString("preview"),
-                    doc.getString("category"),
-                    doc.getString("link")
-            ));
+            articles.add(Article.fromDocument(doc));
+        }
+        return articles;
+    }
+
+    public List<String> getAllArticleUrls() {
+        List<String> urls = new ArrayList<>();
+        List<Article> allArticles = getAllArticles();
+        for (Article article : allArticles) {
+            urls.add(article.getLink());
+        }
+        return urls;
+    }
+
+    public List<Article> getArticlesByCategory(String category) {
+        List<Article> articles = new ArrayList<>();
+        for (Document doc : articlesCollection.find(Filters.eq("category", category))) {
+            articles.add(Article.fromDocument(doc));
         }
         return articles;
     }
 
     public void deleteArticle(int id) {
         articlesCollection.deleteOne(Filters.eq("id", id));
+    }
+
+    public void updateArticleRating(int id, double newAverageRating, int newRatingCount) {
+        articlesCollection.updateOne(
+                Filters.eq("id", id),
+                Updates.combine(
+                        Updates.set("averageRating", newAverageRating),
+                        Updates.set("ratingCount", newRatingCount)
+                )
+        );
     }
 
     public int getMaxArticleId() {

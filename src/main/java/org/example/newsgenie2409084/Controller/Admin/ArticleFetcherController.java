@@ -6,9 +6,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import org.example.newsgenie2409084.Database.DatabaseArticles;
+import org.example.newsgenie2409084.Database.DatabaseFetchCount;
 import org.example.newsgenie2409084.Model.Article;
 import org.example.newsgenie2409084.Service.CategoriseArticles;
 import org.example.newsgenie2409084.Util.SceneLoader;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +19,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ArticleFetcherController {
 
@@ -30,8 +35,9 @@ public class ArticleFetcherController {
     @FXML
     private TextField confirmTextField;
 
-    private static final String API_KEY = "35e209b1c0b5403ca29d116c65d7ce44";
-    private final DatabaseArticles databaseArticle = new DatabaseArticles();
+    private static final String API_KEY = "Kws1Nwroq7iA-oEJVgn0JNhM7EHZFy3XR_CHtwCx5T4EsZeK";
+    private final DatabaseArticles databaseArticles = new DatabaseArticles();
+    private final DatabaseFetchCount databaseFetchCount = new DatabaseFetchCount();
 
     @FXML
     public void fetchAndSaveArticles(ActionEvent event) {
@@ -46,8 +52,8 @@ public class ArticleFetcherController {
         int articleCount;
         try {
             articleCount = Integer.parseInt(inputNumber);
-            if (articleCount < 1 || articleCount > 35) {
-                showAlert(Alert.AlertType.ERROR, "Error", "Please enter a number between 1 and 35.");
+            if (articleCount < 1 || articleCount > 40) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Please enter a number between 1 and 40.");
                 return;
             }
         } catch (NumberFormatException e) {
@@ -62,68 +68,90 @@ public class ArticleFetcherController {
     }
 
     private void fetchArticlesFromAPI(int articleCount) {
-        String apiUrl = "https://newsapi.org/v2/top-headlines?country=us&pageSize=" + articleCount + "&apiKey=" + API_KEY;
-
+        int currentPage = databaseFetchCount.getFetchCount();
         List<Article> articles = new ArrayList<>();
+        int articlesFetched = 0;
+
         try {
-            URL url = new URL(apiUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
+            while (articlesFetched < articleCount) {
+                String apiUrl = "https://api.currentsapi.services/v1/latest-news?language=en&limit=" +
+                                articleCount + "&page_number=" + currentPage + "&apiKey=" + API_KEY;
 
-            int responseCode = connection.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder response = new StringBuilder();
-                String line;
+                URL url = new URL(apiUrl);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
 
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    StringBuilder response = new StringBuilder();
+                    String line;
+
+                    while ((line = reader.readLine()) != null) {
+                        response.append(line);
+                    }
+                    reader.close();
+
+                    articlesFetched += saveArticles(response.toString(), articles, articleCount - articlesFetched);
+
+                    currentPage++;
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Error", "Failed to fetch articles. Response Code: " + responseCode);
+                    return;
                 }
-                reader.close();
-
-                saveArticles(response.toString(), articles);
-
-                showAlert(Alert.AlertType.INFORMATION, "Success", articles.size() + " articles were fetched and saved.");
-            } else {
-                showAlert(Alert.AlertType.ERROR, "Error", "Failed to fetch articles. Response Code: " + responseCode);
             }
+
+            databaseFetchCount.updateFetchCount(currentPage);
+
+            showAlert(Alert.AlertType.INFORMATION, "Success", articles.size() + " new articles were fetched and saved.");
         } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, "Error", "An unexpected error occurred. Please try again.");
             e.printStackTrace();
         }
     }
 
-    private void saveArticles(String response, List<Article> articles) {
-        int idCounter = databaseArticle.getMaxArticleId() + 1;
+    private int saveArticles(String response, List<Article> articles, int remainingCount) {
+        int idCounter = databaseArticles.getMaxArticleId() + 1;
+        Set<String> existingUrls = new HashSet<>(databaseArticles.getAllArticleUrls());
+        int savedCount = 0;
 
-        String[] articleBlocks = response.split("\"articles\":\\[")[1].split("\\],")[0].split("\\},\\{");
-
-        for (String block : articleBlocks) {
-            String name = extractValue(block, "\"title\":\"");
-            String preview = extractValue(block, "\"description\":\"");
-            String link = extractValue(block, "\"url\":\"");
-
-            CategoriseArticles categoriser = new CategoriseArticles();
-            String category = categoriser.categorize(name, preview);
-
-            Article article = new Article(idCounter++, name, preview, category, link);
-            articles.add(article);
-
-            databaseArticle.saveArticle(article);
-        }
-    }
-
-    private String extractValue(String block, String key) {
         try {
-            int startIndex = block.indexOf(key) + key.length();
-            int endIndex = block.indexOf("\",", startIndex);
-            if (endIndex == -1) {
-                endIndex = block.indexOf("\"}", startIndex);
+            JSONObject jsonResponse = new JSONObject(response);
+
+            if (!jsonResponse.has("news")) {
+                showAlert(Alert.AlertType.WARNING, "No Articles", "No articles found in the API response.");
+                return 0;
             }
-            return block.substring(startIndex, endIndex).replace("\\\"", "\"");
+
+            JSONArray newsArray = jsonResponse.getJSONArray("news");
+
+            for (int i = 0; i < newsArray.length() && savedCount < remainingCount; i++) {
+                JSONObject articleJson = newsArray.getJSONObject(i);
+
+                String name = articleJson.optString("title", "No Title");
+                String preview = articleJson.optString("description", "No Description");
+                String link = articleJson.optString("url", "");
+                String source = articleJson.optString("source", "");
+
+                if (existingUrls.contains(link) || link.isEmpty() || source.equalsIgnoreCase("einnews")) {
+                    continue;
+                }
+
+                CategoriseArticles categoriser = new CategoriseArticles();
+                String category = categoriser.categorize(name, preview);
+
+                Article article = new Article(idCounter++, name, preview, category, link, 0.0, 0);
+                articles.add(article);
+                databaseArticles.saveArticle(article);
+                savedCount++;
+            }
+
         } catch (Exception e) {
-            return "N/A";
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to process articles from the API response.");
         }
+
+        return savedCount;
     }
 
     @FXML

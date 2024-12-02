@@ -3,6 +3,7 @@ package org.example.newsgenie2409084.Controller.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import org.example.newsgenie2409084.Util.CurrentUser;
 import org.example.newsgenie2409084.Util.SceneLoader;
 
 import java.io.IOException;
@@ -11,10 +12,13 @@ public class UserMenuController {
 
 
     @FXML
-    public Button ViewArticles;
+    public Button RecommendedArticles;
 
     @FXML
-    public Button ViewHistory;
+    public Button AllArticles;
+
+    @FXML
+    public Button ReadHistory;
 
     @FXML
     public Button ManageAccount;
@@ -23,11 +27,15 @@ public class UserMenuController {
     public Button LogOut;
 
 
-    public void directToViewArticles(ActionEvent event) throws IOException {
-        SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/User/ViewArticles.fxml");
+    public void directToRecommendedArticles(ActionEvent actionEvent) throws IOException {
+        SceneLoader.loadScene(actionEvent, "/org/example/newsgenie2409084/View/User/RecommendedArticles.fxml");
     }
 
-    public void directToViewHistory(ActionEvent event) throws IOException {
+    public void directToAllArticles(ActionEvent event) throws IOException {
+        SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/User/ViewAllArticles.fxml");
+    }
+
+    public void directToReadHistory(ActionEvent event) throws IOException {
         SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/User/ViewHistory.fxml");
     }
 
@@ -36,6 +44,7 @@ public class UserMenuController {
     }
 
     public void LogOut(ActionEvent event) throws IOException {
+        CurrentUser.clear();
         SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/WelcomePage.fxml");
     }
 }

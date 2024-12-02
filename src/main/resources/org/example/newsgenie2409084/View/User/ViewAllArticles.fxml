@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="750.0" maxWidth="1000.0" minHeight="750.0" minWidth="1000.0" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsgenie2409084.Controller.User.ViewAllArticlesController">
+   <children>
+      <AnchorPane maxHeight="750.0" maxWidth="300.0" minHeight="750.0" minWidth="300.0" prefHeight="750.0" prefWidth="300.0" styleClass="menubar" stylesheets="@../../Styles/Styles.css" StackPane.alignment="TOP_LEFT">
+         <children>
+            <Label layoutX="67.0" layoutY="45.0" text="All Articles" textFill="WHITE">
+               <font>
+                  <Font name="Apple SD Gothic Neo ExtraBold" size="35.0" />
+               </font>
+            </Label>
+            <Button fx:id="BackToUserMenu" layoutX="75.0" layoutY="614.0" mnemonicParsing="false" onAction="#backToUserMenu" prefHeight="30.0" prefWidth="150.0" text="Back to User Menu" />
+         </children>
+      </AnchorPane>
+      <AnchorPane maxHeight="750.0" maxWidth="700.0" minHeight="750.0" minWidth="700.0" prefHeight="750.0" prefWidth="700.0" styleClass="content" stylesheets="@../../Styles/Styles.css" StackPane.alignment="TOP_RIGHT">
+         <children>
+            <TableView fx:id="AllArticlesTable" layoutX="5.0" layoutY="161.0" maxWidth="690.0" minWidth="690.0" prefHeight="476.0" prefWidth="690.0">
+              <columns>
+                <TableColumn fx:id="ArticleHeadline" prefWidth="262.0" text="Article Headline" />
+                <TableColumn fx:id="ArticlePreview" prefWidth="406.0" text="Article Preview" />
+              </columns>
+            </TableView>
+            <RadioButton fx:id="healthRadio" layoutX="15.0" layoutY="70.0" mnemonicParsing="false" text="Health" />
+            <RadioButton fx:id="technologyRadio" layoutX="145.2" layoutY="70.0" mnemonicParsing="false" text="Technology" />
+            <RadioButton fx:id="politicsRadio" layoutX="270.4" layoutY="70.0" mnemonicParsing="false" text="Politics" />
+            <RadioButton fx:id="businessRadio" layoutX="381.6" layoutY="70.0" mnemonicParsing="false" text="Business" />
+            <RadioButton fx:id="scienceRadio" layoutX="503.8" layoutY="70.0" mnemonicParsing="false" text="Science" />
+            <RadioButton fx:id="sportRadio" layoutX="626.0" layoutY="70.0" mnemonicParsing="false" text="Sports" />
+            <RadioButton fx:id="entertainmentRadio" layoutX="15.0" layoutY="96.0" mnemonicParsing="false" text="Entertainment" />
+            <RadioButton fx:id="environmentRadio" layoutX="145.0" layoutY="96.0" mnemonicParsing="false" text="Environment" />
+            <RadioButton fx:id="crimeRadio" layoutX="270.0" layoutY="96.0" mnemonicParsing="false" text="Crime" />
+            <RadioButton fx:id="educationRadio" layoutX="382.0" layoutY="96.0" mnemonicParsing="false" text="Education" />
+            <RadioButton fx:id="weatherRadio" layoutX="504.0" layoutY="96.0" mnemonicParsing="false" text="Weather" />
+            <RadioButton fx:id="otherRadio" layoutX="626.0" layoutY="96.0" mnemonicParsing="false" text="Other" />
+            <Label layoutX="207.0" layoutY="14.0" text="Browse through all available articles below.">
+               <font>
+                  <Font name="Apple SD Gothic Neo ExtraBold" size="15.0" />
+               </font></Label>
+            <Button fx:id="ViewArticle" defaultButton="true" layoutX="290.0" layoutY="690.0" mnemonicParsing="false" onAction="#viewArticle" text="View Article">
+               <font>
+                  <Font name="Apple SD Gothic Neo ExtraBold" size="18.0" />
+               </font>
+            </Button>
+            <Label layoutX="97.0" layoutY="642.0" text="To read an article, select it from the table and click the 'View Article' button. ">
+               <font>
+                  <Font name="Apple SD Gothic Neo ExtraBold" size="15.0" />
+               </font></Label>
+            <Label layoutX="69.0" layoutY="35.0" text=" Use the category filters on the right to narrow down the list based on your interests.">
+               <font>
+                  <Font name="Apple SD Gothic Neo ExtraBold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="71.0" layoutY="663.0" text="This will open the detailed view of the selected article for you to read the full article.">
+               <font>
+                  <Font name="Apple SD Gothic Neo ExtraBold" size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="ResetFilters" layoutX="306.0" layoutY="122.0" mnemonicParsing="false" onAction="#resetFilters" prefHeight="30.0" prefWidth="92.0" text="Reset Filters" />
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

@@ -20,22 +20,27 @@
       </AnchorPane>
       <AnchorPane maxHeight="750.0" maxWidth="700.0" minHeight="750.0" minWidth="700.0" prefHeight="750.0" prefWidth="700.0" stylesheets="@../../Styles/Styles.css" StackPane.alignment="TOP_RIGHT">
          <children>
-            <Button fx:id="ViewArticles" layoutX="176.0" layoutY="150.0" mnemonicParsing="false" onAction="#directToViewArticles" prefHeight="56.0" prefWidth="349.0" text="View Articles">
+            <Button fx:id="RecommendedArticles" layoutX="176.0" layoutY="107.0" mnemonicParsing="false" onAction="#directToRecommendedArticles" prefHeight="56.0" prefWidth="349.0" text="Recommended Articles">
                <font>
                   <Font name="Apple SD Gothic Neo ExtraBold" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="ViewHistory" layoutX="176.0" layoutY="280.0" mnemonicParsing="false" onAction="#directToViewHistory" prefHeight="56.0" prefWidth="349.0" text="View History">
+            <Button fx:id="AllArticles" layoutX="176.0" layoutY="227.0" mnemonicParsing="false" onAction="#directToAllArticles" prefHeight="56.0" prefWidth="349.0" text="All Articles">
                <font>
                   <Font name="Apple SD Gothic Neo ExtraBold" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="ManageAccount" layoutX="176.0" layoutY="410.0" mnemonicParsing="false" onAction="#directToManageAccount" prefHeight="56.0" prefWidth="349.0" text="Manage Account">
+            <Button fx:id="ManageAccount" layoutX="176.0" layoutY="467.0" mnemonicParsing="false" onAction="#directToManageAccount" prefHeight="56.0" prefWidth="349.0" text="Manage Account">
                <font>
                   <Font name="Apple SD Gothic Neo ExtraBold" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="LogOut" layoutX="176.0" layoutY="540.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="56.0" prefWidth="349.0" text="Log Out ">
+            <Button fx:id="LogOut" layoutX="176.0" layoutY="587.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="56.0" prefWidth="349.0" text="Log Out ">
+               <font>
+                  <Font name="Apple SD Gothic Neo ExtraBold" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="ReadHistory" layoutX="176.0" layoutY="347.0" mnemonicParsing="false" onAction="#directToReadHistory" prefHeight="56.0" prefWidth="349.0" text="Read History">
                <font>
                   <Font name="Apple SD Gothic Neo ExtraBold" size="20.0" />
                </font>

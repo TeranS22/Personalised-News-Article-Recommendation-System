@@ -35,9 +35,7 @@ public class ManageArticlesController {
     @FXML
     private TableColumn<Article, String> ArticleLink;
     @FXML
-    private TableColumn<Article, Integer> ArticleThumbsUp;
-    @FXML
-    private TableColumn<Article, Integer> ArticleThumbsDown;
+    private TableColumn<Article, Double> ArticleRating;
 
     @FXML
     private TextField confirmTextField;
@@ -52,6 +50,7 @@ public class ManageArticlesController {
         ArticlePreview.setCellValueFactory(new PropertyValueFactory<>("preview"));
         ArticleCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         ArticleLink.setCellValueFactory(new PropertyValueFactory<>("link"));
+        ArticleRating.setCellValueFactory(new PropertyValueFactory<>("averageRating"));
 
         loadArticles();
     }

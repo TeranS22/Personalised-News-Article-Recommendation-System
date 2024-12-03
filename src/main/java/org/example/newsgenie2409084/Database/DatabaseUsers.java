@@ -1,8 +1,6 @@
 package org.example.newsgenie2409084.Database;
 
-import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import org.bson.Document;
@@ -13,14 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DatabaseUsers {
+public class DatabaseUsers extends AbstractDatabase {
 
-    private static MongoCollection<Document> usersCollection;
+    private static final MongoCollection<Document> usersCollection = database.getCollection("users");
 
-    static {
-        MongoDatabase database = MongoClients.create("mongodb://localhost:27017").getDatabase("newsGenie");
-        usersCollection = database.getCollection("users");
-    }
+
 
     public void saveUser(User user) {
         Document userDoc = user.toDocument();

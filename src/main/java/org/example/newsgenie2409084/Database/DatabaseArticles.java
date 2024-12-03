@@ -1,8 +1,6 @@
 package org.example.newsgenie2409084.Database;
 
-import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import org.bson.Document;
@@ -11,14 +9,9 @@ import org.example.newsgenie2409084.Model.Article;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseArticles {
+public class DatabaseArticles extends AbstractDatabase {
 
-    private static final MongoCollection<Document> articlesCollection;
-
-    static {
-        MongoDatabase database = MongoClients.create("mongodb://localhost:27017").getDatabase("newsGenie");
-        articlesCollection = database.getCollection("articles");
-    }
+    private static final MongoCollection<Document> articlesCollection = database.getCollection("articles");
 
     public void saveArticle(Article article) {
         Document articleDoc = new Document("id", article.getId())
@@ -41,8 +34,7 @@ public class DatabaseArticles {
 
     public List<String> getAllArticleUrls() {
         List<String> urls = new ArrayList<>();
-        List<Article> allArticles = getAllArticles();
-        for (Article article : allArticles) {
+        for (Article article : getAllArticles()) {
             urls.add(article.getLink());
         }
         return urls;
@@ -76,9 +68,6 @@ public class DatabaseArticles {
                 .limit(1)
                 .first();
 
-        if (maxIdDoc != null && maxIdDoc.containsKey("id")) {
-            return maxIdDoc.getInteger("id");
-        }
-        return 0;
+        return (maxIdDoc != null) ? maxIdDoc.getInteger("id") : 0;
     }
 }

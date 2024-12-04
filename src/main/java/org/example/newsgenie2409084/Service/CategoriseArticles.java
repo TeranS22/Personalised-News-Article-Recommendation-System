@@ -1,141 +1,118 @@
 package org.example.newsgenie2409084.Service;
 
+
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CategoriseArticles {
 
-    private final List<String> healthKeywords = Arrays.asList(
+    private final Map<String, List<String>> keywordMap;
+
+    public CategoriseArticles() {
+        keywordMap = new HashMap<>();
+        keywordMap.put("Health", Arrays.asList(
             "health", "medicine", "doctor", "hospital", "disease", "wellness", "nutrition", "fitness", "treatment",
-            "surgery", "vaccine", "diagnosis", "therapy", "illness", "virus", "epidemic", "pandemic", "mental health",
-            "dental", "nursing", "clinical", "healthcare", "recovery", "prevention", "first aid", "cardiology",
-            "orthopedic", "pharmacy", "gynecology", "pediatrics", "neurology", "dermatology", "immunology", "oncology",
-            "radiology", "allergy", "antibiotics", "diabetes", "hypertension", "vaccination", "nutritionist",
-            "psychology", "public health", "infection", "surgeon", "transplant", "alternative medicine", "therapist",
-            "rehabilitation", "well-being", "emergency"
-    );
-
-    private final List<String> technologyKeywords = Arrays.asList(
-            "technology", "AI", "software", "computer", "robot", "machine learning", "hardware", "innovation", "gadget",
-            "smartphone", "internet", "cybersecurity", "blockchain", "cloud", "programming", "coding", "data", "VR",
-            "AR", "virtual reality", "artificial intelligence", "automation", "development", "computing", "networking",
-            "engineering", "IoT", "quantum computing", "apps", "web development", "data science", "big data", "UX",
-            "encryption", "algorithm", "5G", "wearable technology", "augmented reality", "UI", "smart devices",
-            "drones", "nanotechnology", "virtual assistant", "technology trends", "search engine", "server", "database",
-            "technology innovation", "devops", "operating system"
-    );
-
-    private final List<String> politicsKeywords = Arrays.asList(
-            "politics", "election", "government", "president", "vote", "senate", "parliament", "campaign", "diplomacy",
-            "policy", "political party", "congress", "debate", "legislation", "lawmaker", "referendum", "minister",
-            "prime minister", "governor", "mayor", "council", "democracy", "dictatorship", "autocracy", "supreme court",
-            "jurisdiction", "legislature", "nationalism", "liberalism", "conservatism", "socialism", "capitalism",
-            "protest", "constitution", "treaty", "sanctions", "taxation", "foreign relations", "judiciary",
-            "political science", "election fraud", "opposition", "ruling party", "manifesto", "coalition", "propaganda",
-            "parliamentary", "voter turnout", "trump", "biden", "secretary"
-    );
-
-    private final List<String> businessKeywords = Arrays.asList(
-            "business", "market", "economy", "finance", "investment", "entrepreneur", "startup", "stock", "share",
-            "revenue", "profit", "loss", "trading", "banking", "corporate", "merger", "acquisition", "sales",
-            "marketing", "customer", "retail", "commerce", "strategy", "supply chain", "global trade", "e-commerce",
-            "partnership", "business plan", "business development", "business model", "consumer behavior", "invoice",
-            "negotiation", "small business", "business analysis", "economic growth", "franchise", "import", "export",
-            "tariff", "logistics", "branding", "venture capital", "financial report", "investment fund", "cash flow",
-            "business valuation", "productivity", "dividend"
-    );
-
-    private final List<String> scienceKeywords = Arrays.asList(
-            "science", "research", "experiment", "physics", "biology", "chemistry", "astronomy", "ecology", "geology",
-            "botany", "zoology", "genetics", "evolution", "microscope", "laboratory", "discovery", "analysis", "theory",
-            "hypothesis", "scientist", "quantum", "space", "climate change", "energy", "biology", "nanotechnology",
-            "particle physics", "biochemistry", "neuroscience", "anthropology", "marine biology", "astrophysics",
-            "ecosystem", "geophysics", "meteorology", "scientific method", "scientific paper", "cell biology",
-            "natural sciences", "bioinformatics", "environmental science", "materials science", "microbiology",
-            "paleontology", "scientific innovation", "biophysics", "seismology", "environmental studies"
-    );
-
-    private final List<String> sportsKeywords = Arrays.asList(
-            "sports", "game", "football", "cricket", "athlete", "tennis", "basketball", "soccer", "rugby", "volleyball",
-            "swimming", "track", "field", "olympics", "training", "coach", "stadium", "goal", "match", "tournament",
-            "league", "championship", "marathon", "fitness", "hockey", "athletics", "gymnastics", "team", "scoring",
-            "playoffs", "competition", "medal", "scoreboard", "sportsmanship", "cycling", "karate", "judo", "wrestling",
-            "skiing", "golf", "triathlon", "badminton", "table tennis", "curling", "bowling", "doping", "esports", "F1"
-    );
-
-    private final List<String> entertainmentKeywords = Arrays.asList(
-            "entertainment", "movie", "music", "celebrity", "theater", "actor", "actress", "show", "performance",
-            "comedy", "drama", "action", "concert", "festival", "streaming", "series", "film", "award", "event",
-            "production", "cinema", "director", "script", "reality show", "blockbuster", "soundtrack", "video",
-            "movie premiere", "broadway", "musical", "visual effects", "animation", "movie trailer", "genre", "fiction",
-            "documentary", "box office", "festival", "red carpet", "celebrity", "gossip", "interview", "sound design",
-            "live performance", "stage", "costume design", "theater production", "ticket sales"
-    );
-
-    private final List<String> environmentKeywords = Arrays.asList(
-            "environment", "climate", "pollution", "wildlife", "nature", "sustainability", "renewable", "ecosystem",
-            "biodiversity", "conservation", "forest", "recycling", "waste", "carbon", "emissions", "green", "ozone",
-            "global warming", "natural", "habitat", "solar", "energy", "organic", "clean", "deforestation",
-            "fossil fuels", "eco-friendly", "sustainable development", "environmental impact", "composting",
-            "reforestation", "species extinction", "habitat loss", "climate action", "air quality", "water pollution",
-            "plastic waste", "environmental awareness", "sustainable agriculture", "ocean conservation", "rainforest",
-            "climate justice", "ecotourism", "renewable energy", "climate solutions", "zero waste"
-    );
-
-    private final List<String> crimeKeywords = Arrays.asList(
-            "crime", "police", "arrest", "theft", "investigation", "murder", "robbery", "fraud", "cybercrime", "law",
-            "assault", "prison", "violence", "witness", "evidence", "forensics", "justice", "court", "homicide",
-            "trial", "burglary", "suspect", "victim", "sentence", "criminal", "prosecution", "misconduct", "conviction",
-            "bail", "drug trafficking", "organized crime", "terrorism", "money laundering", "espionage", "kidnapping",
-            "gang", "domestic violence", "juvenile crime", "parole", "rape", "sexual harassment", "vandalism",
-            "embezzlement", "scam", "identity theft", "extortion", "blackmail", "arson", "smuggling"
-    );
-
-    private final List<String> educationKeywords = Arrays.asList(
-            "education", "school", "university", "student", "teacher", "learning", "curriculum", "classroom", "degree",
-            "scholarship", "tuition", "study", "lecture", "assignment", "exam", "research", "academic", "college",
-            "graduate", "faculty", "campus", "admission", "course", "training", "pedagogy", "teaching", "syllabus",
-            "online learning", "higher education", "kindergarten", "preschool", "alumni", "library", "diploma",
-            "assessment", "grading", "philosophy of education", "education policy", "distance learning", "educational",
-            "extracurricular", "school board", "educational reform", "adult education", "lifelong learning",
-            "special education", "public school", "private school", "vocational training"
-    );
-
-    private final List<String> weatherKeywords = Arrays.asList(
-            "weather", "rain", "storm", "temperature", "forecast", "climate", "snow", "hurricane", "wind", "flood",
-            "heatwave", "thunderstorm", "cold", "fog", "drought", "humidity", "tornado", "monsoon", "lightning", "hail",
-            "cloudy", "sunny", "freezing", "season", "winter", "summer", "autumn", "spring", "pressure", "atmosphere",
-            "tropical", "polar", "cyclone", "typhoon", "meteorology", "blizzard", "weather patterns", "drizzle", "dew",
-            "ice storm", "precipitation", "frost", "clear skies", "barometer", "air quality", "heat index", "UV index",
-            "temperature drop", "storm surge"
-    );
-
+            "surgery", "vaccine", "diagnosis", "therapy", "virus", "pandemic", "mental health", "emergency", "recovery",
+            "public health", "medical research", "immunity", "epidemic", "clinical trials", "hospitalization",
+            "infectious disease", "chronic illness", "cardiology", "orthopedic", "pediatrics", "dermatology", "neuro",
+            "immunization", "general health", "respiratory", "gastroenterology", "oncology", "orthopedics",
+            "psychology", "therapeutic", "surgical", "anatomy", "patient care", "healthcare system", "pharmaceutical",
+            "medical advancement", "reproductive health", "nursing", "medical technology", "diagnostic tools",
+            "primary care", "health policy", "dental care", "mental wellness", "addiction recovery"
+        ));
+        keywordMap.put("Technology", Arrays.asList(
+            "technology", "AI", "software", "computer", "robot", "machine learning", "hardware", "innovation",
+            "cybersecurity", "blockchain", "cloud", "data science", "quantum computing", "apps", "smartphone", "5G",
+            "automation", "artificial intelligence", "virtual reality", "augmented reality", "internet of things",
+            "digital transformation", "deep learning", "neural networks", "big data", "database", "information systems",
+            "coding", "programming", "biotechnology", "tech startups", "wearables", "gadgets", "cryptography",
+            "tech trends", "VR headset", "nanotechnology", "semiconductors", "AR games", "algorithm", "CPU",
+            "AI ethics", "cyber attack", "technology innovation", "engineering", "digital privacy", "data mining",
+            "tech review", "internet security", "tech ecosystem", "software development"
+        ));
+        keywordMap.put("Politics", Arrays.asList(
+            "politics", "government", "election", "senate", "parliament", "president", "policy", "campaign",
+            "diplomacy", "minister", "prime minister", "democracy", "law", "constitution", "protest", "public policy",
+            "legislation", "civil rights", "political party", "congress", "judiciary", "governance",
+            "parliamentary debates", "political agenda", "statecraft", "federalism", "coalition", "executive order",
+            "treaty", "international relations", "social justice", "cabinet", "political leader", "caucus",
+            "lobbying", "political campaign", "bipartisanship", "referendum", "electoral reform", "human rights",
+            "political ideology", "foreign policy", "social movements", "voter turnout", "civil unrest",
+            "nationalism", "policy analysis"
+        ));
+        keywordMap.put("Business", Arrays.asList(
+            "business", "market", "economy", "finance", "investment", "entrepreneur", "stock", "profit", "trade",
+            "banking", "revenue", "sales", "corporate", "commerce", "e-commerce", "growth", "merger", "strategy",
+            "financial market", "startups", "business expansion", "shares", "fiscal policy", "monetary policy",
+            "global economy", "wealth", "business model", "funding", "IPO", "dividends", "acquisitions", "logistics",
+            "supply chain", "consumer behavior", "market trend", "economist", "business management", "taxation",
+            "microfinance", "trade agreement", "real estate", "equity", "capital market", "recession", "inflation",
+            "foreign exchange", "business innovation", "corporate culture", "business ethics", "retail"
+        ));
+        keywordMap.put("Entertainment", Arrays.asList(
+            "entertainment", "movie", "music", "theater", "celebrity", "show", "performance", "concert", "festival",
+            "cinema", "series", "award", "drama", "comedy", "animation", "soundtrack", "blockbuster", "streaming",
+            "documentary", "reality TV", "trending", "pop culture", "video games", "binge-watching", "musical",
+            "actor", "actress", "director", "artistic", "singing competition", "stage play", "box office", "album",
+            "trailer", "premiere", "TV show", "production", "Hollywood", "Bollywood", "red carpet", "celebration"
+        ));
+        keywordMap.put("Environment", Arrays.asList(
+            "environment", "climate", "pollution", "wildlife", "nature", "sustainability", "conservation", "recycling",
+            "biodiversity", "forest", "green", "eco-friendly", "habitat", "solar", "deforestation", "carbon",
+            "emissions", "global warming", "environmental protection", "renewable energy", "climate action",
+            "clean energy", "waste management", "plastic pollution", "ecotourism", "reforestation", "natural resources",
+            "eco-system", "energy efficiency", "water conservation", "marine life", "ocean pollution", "greenhouse gases"
+        ));
+        keywordMap.put("Crime", Arrays.asList(
+            "crime", "police", "arrest", "theft", "murder", "fraud", "violence", "prison", "investigation",
+            "cybercrime", "law", "homicide", "justice", "assault", "prosecution", "robbery", "gang", "terrorism",
+            "forgery", "blackmail", "kidnapping", "money laundering", "corruption", "burglary", "smuggling",
+            "domestic violence", "white-collar crime", "criminal investigation", "vandalism", "organized crime",
+            "drug trafficking", "arson", "shoplifting", "illegal"
+        ));
+        keywordMap.put("Education", Arrays.asList(
+            "education", "school", "university", "student", "teacher", "learning", "curriculum", "classroom",
+            "research", "scholarship", "faculty", "campus", "admission", "academic", "teaching", "online learning",
+            "e-learning", "education policy", "degree", "exams", "grades", "primary education", "secondary education",
+            "higher education", "philosophy of education", "education reform", "tutoring", "homework", "educational tools",
+            "STEM education", "extracurricular", "learning disabilities", "student loans"
+        ));
+        keywordMap.put("Weather", Arrays.asList(
+            "weather", "rain", "storm", "temperature", "forecast", "climate", "snow", "hurricane", "flood",
+            "heatwave", "thunderstorm", "humidity", "tornado", "monsoon", "drought", "fog", "winter", "season",
+            "wind speed", "sunshine", "chilly", "cloudy", "precipitation", "meteorology", "extreme weather",
+            "severe weather", "cold front", "heat advisory", "UV index", "tropical storm"
+        ));
+    }
 
     public String categorize(String title, String preview) {
         String content = (title + " " + preview).toLowerCase();
+        Map<String, Integer> scores = new HashMap<>();
 
-        if (containsKeyword(content, healthKeywords)) return "Health";
-        if (containsKeyword(content, technologyKeywords)) return "Technology";
-        if (containsKeyword(content, politicsKeywords)) return "Politics";
-        if (containsKeyword(content, businessKeywords)) return "Business";
-        if (containsKeyword(content, scienceKeywords)) return "Science";
-        if (containsKeyword(content, sportsKeywords)) return "Sports";
-        if (containsKeyword(content, entertainmentKeywords)) return "Entertainment";
-        if (containsKeyword(content, environmentKeywords)) return "Environment";
-        if (containsKeyword(content, crimeKeywords)) return "Crime";
-        if (containsKeyword(content, educationKeywords)) return "Education";
-        if (containsKeyword(content, weatherKeywords)) return "Weather";
-
-        return "Other";
-    }
-
-    private boolean containsKeyword(String content, List<String> keywords) {
-        for (String keyword : keywords) {
-            if (content.contains(keyword)) {
-                return true;
+        for (Map.Entry<String, List<String>> entry : keywordMap.entrySet()) {
+            String category = entry.getKey();
+            List<String> keywords = entry.getValue();
+            int score = calculateKeywordScore(content, keywords);
+            if (score > 0) {
+                scores.put(category, score);
             }
         }
-        return false;
+
+        return scores.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse("Other");
+    }
+
+    private int calculateKeywordScore(String content, List<String> keywords) {
+        int score = 0;
+        for (String keyword : keywords) {
+            if (content.contains(keyword)) {
+                score++;
+            }
+        }
+        return score;
     }
 }
-

@@ -1,17 +1,17 @@
 package org.example.newsgenie2409084.Util;
 
 public class CurrentUser {
-    private static final ThreadLocal<String> currentUser = ThreadLocal.withInitial(() -> null);
+    private static String currentUser;
 
     public static void setUsername(String username) {
-        currentUser.set(username);
+        currentUser = username;
     }
 
     public static String getUsername() {
-        return currentUser.get();
+        return currentUser;
     }
 
     public static void clear() {
-        currentUser.remove();
+        currentUser = null;
     }
 }

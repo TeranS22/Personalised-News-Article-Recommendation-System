@@ -91,7 +91,7 @@ public class DatabaseUsers extends AbstractDatabase {
             }
 
             int currentScore = preferredCategories.containsKey(category) ? preferredCategories.get(category) : 0;
-            preferredCategories.put(category, currentScore + 1);
+            preferredCategories.put(category, currentScore + (rating/2));
 
             usersCollection.updateOne(
                     Filters.eq("username", username),

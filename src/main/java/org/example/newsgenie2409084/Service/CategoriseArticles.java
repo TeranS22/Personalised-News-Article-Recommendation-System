@@ -14,13 +14,17 @@ public class CategoriseArticles {
         keywordMap = new HashMap<>();
         keywordMap.put("Health", Arrays.asList(
             "health", "medicine", "doctor", "hospital", "disease", "wellness", "nutrition", "fitness", "treatment",
-            "surgery", "vaccine", "diagnosis", "therapy", "virus", "pandemic", "mental health", "emergency", "recovery",
-            "public health", "medical research", "immunity", "epidemic", "clinical trials", "hospitalization",
-            "infectious disease", "chronic illness", "cardiology", "orthopedic", "pediatrics", "dermatology", "neuro",
-            "immunization", "general health", "respiratory", "gastroenterology", "oncology", "orthopedics",
-            "psychology", "therapeutic", "surgical", "anatomy", "patient care", "healthcare system", "pharmaceutical",
-            "medical advancement", "reproductive health", "nursing", "medical technology", "diagnostic tools",
-            "primary care", "health policy", "dental care", "mental wellness", "addiction recovery"
+            "surgery", "vaccine", "diagnosis", "therapy", "illness", "virus", "epidemic", "pandemic", "mental health",
+            "dental", "nursing", "clinical", "healthcare", "recovery", "prevention", "first aid", "cardiology",
+            "orthopedic", "pharmacy", "gynecology", "pediatrics", "neurology", "dermatology", "immunology", "oncology",
+            "radiology", "allergy", "antibiotics", "diabetes", "hypertension", "vaccination", "nutritionist", "psychology",
+            "public health", "infection", "surgeon", "transplant", "alternative medicine", "therapist", "rehabilitation",
+            "well-being", "emergency", "medical research", "immunity", "clinical trials", "hospitalization",
+            "infectious disease", "chronic illness", "general health", "respiratory", "gastroenterology",
+            "therapeutic", "surgical", "anatomy", "patient care", "healthcare system", "pharmaceutical",
+            "medical advancement", "reproductive health", "medical technology", "diagnostic tools",
+            "primary care", "health policy", "mental wellness", "addiction recovery", "WHO"
+
         ));
         keywordMap.put("Technology", Arrays.asList(
             "technology", "AI", "software", "computer", "robot", "machine learning", "hardware", "innovation",
@@ -30,60 +34,123 @@ public class CategoriseArticles {
             "coding", "programming", "biotechnology", "tech startups", "wearables", "gadgets", "cryptography",
             "tech trends", "VR headset", "nanotechnology", "semiconductors", "AR games", "algorithm", "CPU",
             "AI ethics", "cyber attack", "technology innovation", "engineering", "digital privacy", "data mining",
-            "tech review", "internet security", "tech ecosystem", "software development"
+            "tech review", "internet security", "tech ecosystem", "software development", "internet", "data", "VR",
+            "AR", "development", "computing", "networking", "IoT", "web development", "UX", "encryption", "ubuntu",
+            "wearable technology", "UI", "smart devices", "drones", "virtual assistant", "technology trends",
+            "search engine", "server", "devops", "operating system", "samsung", "apple", "ios", "android", "linux"
+
         ));
         keywordMap.put("Politics", Arrays.asList(
-            "politics", "government", "election", "senate", "parliament", "president", "policy", "campaign",
-            "diplomacy", "minister", "prime minister", "democracy", "law", "constitution", "protest", "public policy",
-            "legislation", "civil rights", "political party", "congress", "judiciary", "governance",
-            "parliamentary debates", "political agenda", "statecraft", "federalism", "coalition", "executive order",
-            "treaty", "international relations", "social justice", "cabinet", "political leader", "caucus",
-            "lobbying", "political campaign", "bipartisanship", "referendum", "electoral reform", "human rights",
-            "political ideology", "foreign policy", "social movements", "voter turnout", "civil unrest",
-            "nationalism", "policy analysis"
+            "politics", "election", "government", "president", "vote", "senate", "parliament", "campaign", "diplomacy",
+            "policy", "political party", "congress", "debate", "legislation", "lawmaker", "referendum", "minister",
+            "prime minister", "governor", "mayor", "council", "democracy", "dictatorship", "autocracy", "supreme court",
+            "jurisdiction", "legislature", "nationalism", "liberalism", "conservatism", "socialism", "capitalism", "putin",
+            "protest", "constitution", "treaty", "sanctions", "taxation", "foreign relations", "judiciary", "statecraft",
+            "political science", "election fraud", "opposition", "ruling party", "manifesto", "coalition", "propaganda",
+            "parliamentary debates", "voter turnout", "civil unrest", "human rights", "political ideology", "foreign policy",
+            "social movements", "public policy", "executive order", "international relations", "electoral reform", "civil rights",
+            "cabinet member", "political agenda", "bipartisanship", "state governor", "political leader", "policy analysis",
+            "campaign rally", "global diplomacy", "social justice", "freedom of speech", "diplomatic ties", "trade agreement",
+            "lobbying efforts", "judicial review", "treaty negotiation", "constitutional law", "voting rights", "trump", "biden"
+
         ));
         keywordMap.put("Business", Arrays.asList(
-            "business", "market", "economy", "finance", "investment", "entrepreneur", "stock", "profit", "trade",
-            "banking", "revenue", "sales", "corporate", "commerce", "e-commerce", "growth", "merger", "strategy",
-            "financial market", "startups", "business expansion", "shares", "fiscal policy", "monetary policy",
-            "global economy", "wealth", "business model", "funding", "IPO", "dividends", "acquisitions", "logistics",
-            "supply chain", "consumer behavior", "market trend", "economist", "business management", "taxation",
-            "microfinance", "trade agreement", "real estate", "equity", "capital market", "recession", "inflation",
-            "foreign exchange", "business innovation", "corporate culture", "business ethics", "retail"
+            "business", "market", "economy", "finance", "investment", "entrepreneur", "startup", "stock", "share",
+            "revenue", "profit", "loss", "trading", "banking", "corporate", "merger", "acquisition", "sales",
+            "marketing", "customer", "retail", "commerce", "strategy", "supply chain", "global trade", "e-commerce",
+            "partnership", "business plan", "business development", "business model", "consumer behavior", "invoice",
+            "negotiation", "small business", "business analysis", "economic growth", "franchise", "import", "export",
+            "tariff", "logistics", "branding", "venture capital", "financial report", "investment fund", "cash flow",
+            "business valuation", "productivity", "dividend", "business ethics", "global economy", "taxation policy",
+            "financial market", "IPO launch", "market research", "startup growth", "equity funding", "trade balance",
+            "corporate culture", "real estate", "business expansion", "capital market", "microfinance projects", "economic trends",
+            "wealth management", "business merger", "foreign exchange", "revenue generation", "small enterprise", "cost analysis"
+
         ));
         keywordMap.put("Entertainment", Arrays.asList(
-            "entertainment", "movie", "music", "theater", "celebrity", "show", "performance", "concert", "festival",
-            "cinema", "series", "award", "drama", "comedy", "animation", "soundtrack", "blockbuster", "streaming",
-            "documentary", "reality TV", "trending", "pop culture", "video games", "binge-watching", "musical",
-            "actor", "actress", "director", "artistic", "singing competition", "stage play", "box office", "album",
-            "trailer", "premiere", "TV show", "production", "Hollywood", "Bollywood", "red carpet", "celebration"
+            "entertainment", "movie", "music", "celebrity", "theater", "actor", "actress", "show", "performance",
+            "comedy", "drama", "action", "concert", "festival", "streaming", "series", "film", "award", "event",
+            "production", "cinema", "director", "script", "reality show", "blockbuster", "soundtrack", "video",
+            "movie premiere", "broadway", "musical", "visual effects", "animation", "movie trailer", "genre", "fiction",
+            "documentary", "box office", "festival event", "red carpet", "celebrity gossip", "live performance", "stage design",
+            "costume design", "sound design", "Hollywood actor", "Bollywood film", "trending music", "pop culture", "streaming platform",
+            "TV series", "cinematic masterpiece", "entertainment news", "actor's interview", "music album", "singing competition",
+            "artistic drama", "festival celebration", "movie production", "performance art", "theater production", "song playlist",
+            "concert tour", "celebrity award", "movie director", "film festival", "entertainment trends"
+
         ));
         keywordMap.put("Environment", Arrays.asList(
-            "environment", "climate", "pollution", "wildlife", "nature", "sustainability", "conservation", "recycling",
-            "biodiversity", "forest", "green", "eco-friendly", "habitat", "solar", "deforestation", "carbon",
-            "emissions", "global warming", "environmental protection", "renewable energy", "climate action",
-            "clean energy", "waste management", "plastic pollution", "ecotourism", "reforestation", "natural resources",
-            "eco-system", "energy efficiency", "water conservation", "marine life", "ocean pollution", "greenhouse gases"
+            "environment", "climate", "pollution", "wildlife", "nature", "sustainability", "renewable", "ecosystem",
+            "biodiversity", "conservation", "forest", "recycling", "waste", "carbon", "emissions", "green", "ozone",
+            "global warming", "natural", "habitat", "solar", "energy", "organic", "clean", "deforestation",
+            "fossil fuels", "eco-friendly", "sustainable development", "environmental impact", "composting",
+            "reforestation", "species extinction", "habitat loss", "climate action", "air quality", "water pollution",
+            "plastic waste", "environmental awareness", "sustainable agriculture", "ocean conservation", "rainforest",
+            "climate justice", "ecotourism", "renewable energy", "climate solutions", "zero waste", "energy efficiency",
+            "marine life", "natural resources", "greenhouse gases", "wildlife habitat", "tree planting", "nature reserve",
+            "pollution control", "water conservation", "climate change", "eco-tourism", "plastic recycling", "environment protection",
+            "carbon footprint", "solar energy", "eco-friendly living", "waste management", "wildlife conservation", "eco activism"
+
         ));
         keywordMap.put("Crime", Arrays.asList(
-            "crime", "police", "arrest", "theft", "murder", "fraud", "violence", "prison", "investigation",
-            "cybercrime", "law", "homicide", "justice", "assault", "prosecution", "robbery", "gang", "terrorism",
-            "forgery", "blackmail", "kidnapping", "money laundering", "corruption", "burglary", "smuggling",
-            "domestic violence", "white-collar crime", "criminal investigation", "vandalism", "organized crime",
-            "drug trafficking", "arson", "shoplifting", "illegal"
+            "crime", "police", "arrest", "theft", "investigation", "murder", "robbery", "fraud", "cybercrime", "law",
+            "assault", "prison", "violence", "witness", "evidence", "forensics", "justice", "court", "homicide",
+            "trial", "burglary", "suspect", "victim", "sentence", "criminal", "prosecution", "misconduct", "conviction",
+            "bail", "drug trafficking", "organized crime", "terrorism", "money laundering", "espionage", "kidnapping",
+            "gang", "domestic violence", "juvenile crime", "parole", "rape", "sexual harassment", "vandalism",
+            "embezzlement", "scam", "identity theft", "extortion", "blackmail", "arson", "smuggling", "criminal investigation",
+            "white-collar crime", "cyber attack", "crime statistics", "forensic analysis", "fraud prevention", "gang violence",
+            "criminal trial", "crime witness", "criminal behavior", "court evidence", "crime documentary", "online fraud"
+
         ));
         keywordMap.put("Education", Arrays.asList(
-            "education", "school", "university", "student", "teacher", "learning", "curriculum", "classroom",
-            "research", "scholarship", "faculty", "campus", "admission", "academic", "teaching", "online learning",
-            "e-learning", "education policy", "degree", "exams", "grades", "primary education", "secondary education",
-            "higher education", "philosophy of education", "education reform", "tutoring", "homework", "educational tools",
-            "STEM education", "extracurricular", "learning disabilities", "student loans"
+            "education", "school", "university", "student", "teacher", "learning", "curriculum", "classroom", "degree",
+            "scholarship", "tuition", "study", "lecture", "assignment", "exam", "research", "academic", "college",
+            "graduate", "faculty", "campus", "admission", "course", "training", "pedagogy", "teaching", "syllabus",
+            "online learning", "higher education", "kindergarten", "preschool", "alumni", "library", "diploma",
+            "assessment", "grading", "philosophy of education", "education policy", "distance learning", "educational",
+            "extracurricular", "school board", "educational reform", "adult education", "lifelong learning",
+            "special education", "public school", "private school", "vocational training", "STEM education", "e-learning platforms",
+            "education tools", "school activities", "classroom technology", "student performance", "college degree"
+
         ));
         keywordMap.put("Weather", Arrays.asList(
-            "weather", "rain", "storm", "temperature", "forecast", "climate", "snow", "hurricane", "flood",
-            "heatwave", "thunderstorm", "humidity", "tornado", "monsoon", "drought", "fog", "winter", "season",
-            "wind speed", "sunshine", "chilly", "cloudy", "precipitation", "meteorology", "extreme weather",
-            "severe weather", "cold front", "heat advisory", "UV index", "tropical storm"
+            "weather", "rain", "storm", "temperature", "forecast", "climate", "snow", "hurricane", "wind", "flood",
+            "heatwave", "thunderstorm", "cold", "fog", "drought", "humidity", "tornado", "monsoon", "lightning", "hail",
+            "cloudy", "sunny", "freezing", "season", "winter", "summer", "autumn", "spring", "pressure", "atmosphere",
+            "tropical", "polar", "cyclone", "typhoon", "meteorology", "blizzard", "weather patterns", "drizzle", "dew",
+            "ice storm", "precipitation", "frost", "clear skies", "barometer", "air quality", "heat index", "UV index",
+            "temperature drop", "storm surge", "weather conditions", "climate zones", "storm warning", "rain forecast",
+            "extreme weather", "daily temperature", "cold front", "weather radar", "seasonal changes", "weather data"
+
+        ));
+        keywordMap.put("Science", Arrays.asList(
+                "science", "research", "experiment", "physics", "biology", "chemistry", "astronomy", "ecology", "geology",
+                "botany", "zoology", "genetics", "evolution", "microscope", "laboratory", "discovery", "analysis", "theory",
+                "hypothesis", "scientist", "quantum", "space", "climate change", "energy", "nanotechnology", "particle physics",
+                "biochemistry", "neuroscience", "anthropology", "marine biology", "astrophysics", "ecosystem", "geophysics",
+                "meteorology", "scientific method", "scientific paper", "cell biology", "natural sciences", "bioinformatics",
+                "environmental science", "materials science", "microbiology", "paleontology", "scientific innovation", "biophysics",
+                "seismology", "environmental studies", "genome sequencing", "space exploration", "molecular biology",
+                "organic chemistry", "biomedical research", "biotechnology tools", "scientific experiment", "science outreach",
+                "applied sciences", "physical sciences", "theoretical physics", "DNA analysis", "genetic engineering", "data analysis",
+                "laboratory techniques", "climate modeling", "oceanography", "research grant", "academic journal", "science fair",
+                "planetary science", "earth science", "renewable energy", "science education", "chemical reactions", "ecological balance",
+                "scientific discovery", "robotics research", "innovation hub", "space telescope", "solar system"
+        ));
+        keywordMap.put("Sports", Arrays.asList(
+                "sports", "game", "football", "cricket", "athlete", "tennis", "basketball", "soccer", "rugby", "volleyball",
+                "swimming", "track", "field", "olympics", "training", "coach", "stadium", "goal", "match", "tournament",
+                "league", "championship", "marathon", "fitness", "hockey", "athletics", "gymnastics", "team", "scoring",
+                "playoffs", "competition", "medal", "scoreboard", "sportsmanship", "cycling", "karate", "judo", "wrestling",
+                "skiing", "golf", "triathlon", "badminton", "table tennis", "curling", "bowling", "doping", "esports", "F1",
+                "teamwork", "basketball court", "goalkeeper", "football match", "track events", "field events", "sports coach",
+                "national team", "fitness training", "athletic performance", "sports equipment", "game strategy", "team captain",
+                "soccer league", "trophy ceremony", "game day", "baseball pitch", "tennis tournament", "hiking trail",
+                "sports analyst", "physical training", "sports media", "sports club", "yoga training", "swimming competition",
+                "extreme sports", "adventure sports", "winter sports", "Olympic medal", "match analysis", "stadium crowd",
+                "record-breaking", "sports history", "f1", "formula 1", "Verstappen", "Hamilton", "test match"
+
         ));
     }
 

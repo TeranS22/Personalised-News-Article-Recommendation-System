@@ -59,8 +59,8 @@ public class ViewAllArticlesController {
                     document.getString("preview"),
                     document.getString("category"),
                     document.getString("link"),
-                    document.getDouble("averageRating"), // Pass averageRating
-                    document.getInteger("ratingCount")   // Pass ratingCount
+                    document.getDouble("averageRating"),
+                    document.getInteger("ratingCount")
             ));
         });
         AllArticlesTable.setItems(articles);

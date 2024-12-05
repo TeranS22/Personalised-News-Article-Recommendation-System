@@ -156,22 +156,21 @@ public class CategoriseArticles {
 
     public String categorise(String title, String preview) {
         String content = (title + " " + preview).toLowerCase();
-        Map<String, Integer> scores = new HashMap<>();
+        String bestCategory = "Other";
+        int highestScore = 0;
 
-        for (Map.Entry<String, List<String>> entry : keywordMap.entrySet()) {
-            String category = entry.getKey();
-            List<String> keywords = entry.getValue();
-            int score = calculateKeywordScore(content, keywords);
-            if (score > 0) {
-                scores.put(category, score);
+        for (String category : keywordMap.keySet()) {
+            int score = calculateKeywordScore(content, keywordMap.get(category));
+
+            if (score > highestScore) {
+                highestScore = score;
+                bestCategory = category;
             }
         }
 
-        return scores.entrySet().stream()
-                .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey)
-                .orElse("Other");
+        return bestCategory;
     }
+
 
     private int calculateKeywordScore(String content, List<String> keywords) {
         int score = 0;

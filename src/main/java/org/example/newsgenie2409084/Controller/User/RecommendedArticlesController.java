@@ -40,7 +40,7 @@ public class RecommendedArticlesController {
     private Button NextArticle;
 
     @FXML
-    private Button BackToUserMenu;
+    public Button BackToUserMenu;
 
     private static Article currentArticle;
 

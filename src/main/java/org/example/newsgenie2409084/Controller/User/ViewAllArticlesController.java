@@ -30,7 +30,7 @@ public class ViewAllArticlesController {
     private TableColumn<Article, String> ArticlePreview;
 
     @FXML
-    private Button ResetFiltersButton;
+    public Button ResetFilters;
     @FXML
     public Button ViewArticle;
 

@@ -154,7 +154,7 @@ public class CategoriseArticles {
         ));
     }
 
-    public String categorize(String title, String preview) {
+    public String categorise(String title, String preview) {
         String content = (title + " " + preview).toLowerCase();
         Map<String, Integer> scores = new HashMap<>();
 

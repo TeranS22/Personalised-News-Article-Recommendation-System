@@ -51,10 +51,20 @@ public class RecommendArticles {
             allCategories = new String[]{"Default"};
             categoryValues = new int[]{1};
         } else {
-            allCategories = preferredCategories.keySet().toArray(new String[0]);
-            categoryValues = preferredCategories.values().stream().mapToInt(Integer::intValue).toArray();
+            allCategories = new String[preferredCategories.size()];
+            int index = 0;
+            for (String key : preferredCategories.keySet()) {
+                allCategories[index++] = key;
+            }
+
+            categoryValues = new int[preferredCategories.size()];
+            index = 0;
+            for (Integer value : preferredCategories.values()) {
+                categoryValues[index++] = value;
+            }
         }
     }
+
 
     private void refreshTempCategories() {
         double[] cumulativeProbabilities = computeCumulativeProbabilities(categoryValues);

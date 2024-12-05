@@ -138,7 +138,7 @@ public class ArticleFetcherController {
                 }
 
                 CategoriseArticles categoriser = new CategoriseArticles();
-                String category = categoriser.categorize(name, preview);
+                String category = categoriser.categorise(name, preview);
 
                 Article article = new Article(idCounter++, name, preview, category, link, 0.0, 0);
                 articles.add(article);

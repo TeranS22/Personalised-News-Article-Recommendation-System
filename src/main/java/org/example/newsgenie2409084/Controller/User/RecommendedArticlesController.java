@@ -1,5 +1,6 @@
 package org.example.newsgenie2409084.Controller.User;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,11 +10,12 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import org.controlsfx.control.Rating;
 import org.example.newsgenie2409084.Model.Article;
-import org.example.newsgenie2409084.Util.CurrentUser;
 import org.example.newsgenie2409084.Service.RecommendArticles;
+import org.example.newsgenie2409084.Util.SceneLoader;
+import org.example.newsgenie2409084.Util.SessionManager;
 import org.example.newsgenie2409084.Database.DatabaseUsers;
 import org.example.newsgenie2409084.Database.DatabaseArticles;
-import org.example.newsgenie2409084.Util.SceneLoader;
+import org.example.newsgenie2409084.Util.AlertUtils;
 
 import java.io.IOException;
 
@@ -32,13 +34,13 @@ public class RecommendedArticlesController {
     private Rating UserRating;
 
     @FXML
-    public Button SkipArticle;
-
-    @FXML
-    public Button BackToUserMenu;
+    private Button SkipArticle;
 
     @FXML
     private Button NextArticle;
+
+    @FXML
+    private Button BackToUserMenu;
 
     private static Article currentArticle;
 
@@ -48,18 +50,21 @@ public class RecommendedArticlesController {
 
     @FXML
     public void initialize() {
-        loadNextArticle();
+        String username = SessionManager.getUsername();
+
+        if (username == null || username.isEmpty()) {
+            showError("Error: User not logged in.");
+            return;
+        }
+
+        Platform.runLater(this::loadNextArticle);
     }
 
     private void loadNextArticle() {
-        String username = CurrentUser.getUsername();
+        String username = SessionManager.getUsername();
 
         if (username == null) {
-            ArticleHeading.setText("Error: No user logged in.");
-            ArticleCategory.setText("");
-            ArticleWebView.getEngine().loadContent("<html><body><h1>No Content</h1></body></html>");
-            NextArticle.setDisable(true);
-            SkipArticle.setDisable(true);
+            showError("Error: No user logged in.");
             return;
         }
 
@@ -70,8 +75,6 @@ public class RecommendedArticlesController {
             ArticleCategory.setText(currentArticle.getCategory());
 
             WebEngine webEngine = ArticleWebView.getEngine();
-            webEngine.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.110 Safari/537.36");
-            webEngine.setJavaScriptEnabled(true);
             webEngine.load(currentArticle.getLink());
 
             NextArticle.setDisable(true);
@@ -86,10 +89,17 @@ public class RecommendedArticlesController {
         }
     }
 
+    private void showError(String message) {
+        AlertUtils.showError("Error", message);
+        ArticleHeading.setText(message);
+        ArticleCategory.setText("");
+        ArticleWebView.getEngine().loadContent("<html><body><h1>No Content</h1></body></html>");
+    }
+
     @FXML
     public void skipArticle() {
         if (currentArticle != null) {
-            String username = CurrentUser.getUsername();
+            String username = SessionManager.getUsername();
             if (username != null) {
                 databaseUsers.addToSkippedArticles(username, currentArticle.getId());
             }
@@ -107,7 +117,7 @@ public class RecommendedArticlesController {
     public void nextArticle() {
         if (currentArticle != null) {
             int userRating = (int) UserRating.getRating();
-            String username = CurrentUser.getUsername();
+            String username = SessionManager.getUsername();
             if (username != null) {
                 databaseUsers.updateUserReadHistory(
                     username,
@@ -117,16 +127,16 @@ public class RecommendedArticlesController {
                     userRating,
                     currentArticle.getCategory()
                 );
+
+                double currentAverageRating = currentArticle.getAverageRating();
+                int currentRatingCount = currentArticle.getRatingCount();
+                double newAverageRating = ((currentAverageRating * currentRatingCount) + userRating) / (currentRatingCount + 1);
+
+                databaseArticles.updateArticleRating(currentArticle.getId(), newAverageRating, currentRatingCount + 1);
+
+                UserRating.setRating(0);
+                loadNextArticle();
             }
-
-            double currentAverageRating = currentArticle.getAverageRating();
-            int currentRatingCount = currentArticle.getRatingCount();
-            double newAverageRating = ((currentAverageRating * currentRatingCount) + userRating) / (currentRatingCount + 1);
-
-            databaseArticles.updateArticleRating(currentArticle.getId(), newAverageRating, currentRatingCount + 1);
-
-            UserRating.setRating(0);
-            loadNextArticle();
         }
     }
 

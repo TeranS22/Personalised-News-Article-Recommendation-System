@@ -3,7 +3,7 @@ package org.example.newsgenie2409084.Service;
 import org.example.newsgenie2409084.Database.DatabaseUsers;
 import org.example.newsgenie2409084.Model.Article;
 import org.example.newsgenie2409084.Database.DatabaseArticles;
-import org.example.newsgenie2409084.Util.CurrentUser;
+import org.example.newsgenie2409084.Util.SessionManager;
 
 import java.util.*;
 
@@ -45,7 +45,7 @@ public class RecommendArticles {
     }
 
     private void initializeCategories() {
-        Map<String, Integer> preferredCategories = databaseUsers.getPreferredCategories(CurrentUser.getUsername());
+        Map<String, Integer> preferredCategories = databaseUsers.getPreferredCategories(SessionManager.getUsername());
 
         if (preferredCategories == null || preferredCategories.isEmpty()) {
             allCategories = new String[]{"Default"};

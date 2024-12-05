@@ -6,7 +6,7 @@ import javafx.scene.control.*;
 import org.bson.Document;
 import org.example.newsgenie2409084.Database.DatabaseUsers;
 import org.example.newsgenie2409084.Util.AlertUtils;
-import org.example.newsgenie2409084.Util.CurrentUser;
+import org.example.newsgenie2409084.Util.SessionManager;
 import org.example.newsgenie2409084.Util.SceneLoader;
 
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class ManageAccountController {
 
     @FXML
     public void initialize() {
-        String username = CurrentUser.getUsername();
+        String username = SessionManager.getUsername();
         if (username != null) {
             currentUsername.setText(username);
 
@@ -84,7 +84,7 @@ public class ManageAccountController {
             List<String> updatedPreferences = new ArrayList<>();
             boolean hasUpdates = false;
 
-            if (!updatedUsername.isEmpty() && !updatedUsername.equals(CurrentUser.getUsername())) {
+            if (!updatedUsername.isEmpty() && !updatedUsername.equals(SessionManager.getUsername())) {
                 if (databaseUsers.getUserByUsername(updatedUsername) != null) {
                     AlertUtils.showError("Error", "Username is already taken.");
                     return;
@@ -110,14 +110,14 @@ public class ManageAccountController {
             }
 
             if (!updatedUsername.isEmpty()) {
-                databaseUsers.updateUsername(CurrentUser.getUsername(), updatedUsername);
-                CurrentUser.setUsername(updatedUsername);
+                databaseUsers.updateUsername(SessionManager.getUsername(), updatedUsername);
+                SessionManager.setUsername(updatedUsername);
             }
             if (!updatedPassword.isEmpty()) {
-                databaseUsers.updatePassword(CurrentUser.getUsername(), updatedPassword);
+                databaseUsers.updatePassword(SessionManager.getUsername(), updatedPassword);
             }
             if (!updatedPreferences.isEmpty()) {
-                databaseUsers.updatePreferences(CurrentUser.getUsername(), updatedPreferences, preferredCategories);
+                databaseUsers.updatePreferences(SessionManager.getUsername(), updatedPreferences, preferredCategories);
             }
 
             AlertUtils.showSuccess("Success", "Your account has been updated successfully!");

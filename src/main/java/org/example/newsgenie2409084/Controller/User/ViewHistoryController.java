@@ -7,10 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import org.bson.Document;
 import org.example.newsgenie2409084.Database.DatabaseUsers;
-import org.example.newsgenie2409084.Util.CurrentUser;
+import org.example.newsgenie2409084.Util.SessionManager;
 import org.example.newsgenie2409084.Util.SceneLoader;
 
 import java.io.IOException;
@@ -53,7 +52,7 @@ public class ViewHistoryController {
     }
 
     private void loadUserHistory() {
-        String username = CurrentUser.getUsername();
+        String username = SessionManager.getUsername();
         if (username != null) {
             Document userDoc = databaseUsers.getUserDocumentByUsername(username);
             if (userDoc != null) {

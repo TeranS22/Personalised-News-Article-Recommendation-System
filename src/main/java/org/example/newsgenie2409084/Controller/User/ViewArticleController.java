@@ -9,11 +9,10 @@ import org.controlsfx.control.Rating;
 import org.example.newsgenie2409084.Database.DatabaseArticles;
 import org.example.newsgenie2409084.Database.DatabaseUsers;
 import org.example.newsgenie2409084.Model.Article;
-import org.example.newsgenie2409084.Util.CurrentUser;
+import org.example.newsgenie2409084.Util.SessionManager;
 import org.example.newsgenie2409084.Util.SceneLoader;
 
 import java.io.IOException;
-import java.util.Map;
 
 public class ViewArticleController {
 
@@ -51,7 +50,7 @@ public class ViewArticleController {
     }
 
     private void saveRating() {
-        String username = CurrentUser.getUsername();
+        String username = SessionManager.getUsername();
         if (username != null && finalRating > 0) {
             databaseUsers.updateUserReadHistory(
                 username,

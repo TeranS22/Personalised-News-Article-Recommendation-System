@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.example.newsgenie2409084.Service.ThreadPoolExecutorService;
 
 public class NewsGenieApplication extends Application {
 
@@ -13,6 +14,7 @@ public class NewsGenieApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 1000, 750);
         mainStage.setTitle("Personalized News Recommendation");
         mainStage.setScene(scene);
+        mainStage.setOnCloseRequest(event -> ThreadPoolExecutorService.shutdown());
         mainStage.show();
     }
 

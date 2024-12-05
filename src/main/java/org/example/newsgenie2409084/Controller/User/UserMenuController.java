@@ -3,7 +3,7 @@ package org.example.newsgenie2409084.Controller.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import org.example.newsgenie2409084.Util.CurrentUser;
+import org.example.newsgenie2409084.Util.SessionManager;
 import org.example.newsgenie2409084.Util.SceneLoader;
 
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class UserMenuController {
     }
 
     public void LogOut(ActionEvent event) throws IOException {
-        CurrentUser.clear();
+        SessionManager.clear();
         SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/WelcomePage.fxml");
     }
 }

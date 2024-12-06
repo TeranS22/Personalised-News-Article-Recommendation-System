@@ -36,7 +36,7 @@ public class AdminMenuController {
     }
 
     public void LogOut(ActionEvent event) throws IOException {
-        SessionManager.clear();
+        SessionManager.clear();  // this is to clear session data
         SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/WelcomePage.fxml");
 
     }

@@ -10,13 +10,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.bson.Document;
+import org.example.newsgenie2409084.Database.AbstractDatabase;
 import org.example.newsgenie2409084.Model.Article;
 import org.example.newsgenie2409084.Util.SceneLoader;
 
 import java.io.IOException;
 import java.util.List;
 
-public class ViewAllArticlesController {
+public class ViewAllArticlesController extends AbstractDatabase {
 
     @FXML
     private RadioButton healthRadio, technologyRadio, politicsRadio, businessRadio, scienceRadio,
@@ -34,15 +35,13 @@ public class ViewAllArticlesController {
     @FXML
     public Button ViewArticle;
 
-    private static final MongoCollection<Document> articlesCollection;
+    // MongoDB's collection for articles
+    private static final MongoCollection<Document> articlesCollection = database.getCollection("articles");
 
-    static {
-        MongoDatabase database = MongoClients.create("mongodb://localhost:27017").getDatabase("newsGenie");
-        articlesCollection = database.getCollection("articles");
-    }
 
     @FXML
     public void initialize() {
+        // Set table columns to Article model properties
         ArticleHeadline.setCellValueFactory(new PropertyValueFactory<>("name"));
         ArticlePreview.setCellValueFactory(new PropertyValueFactory<>("preview"));
         loadAllArticles();
@@ -51,6 +50,7 @@ public class ViewAllArticlesController {
     }
 
     private void loadAllArticles() {
+        // Fetch articles from the database and add them to the observable list
         ObservableList<Article> articles = FXCollections.observableArrayList();
         articlesCollection.find().forEach(document -> {
             articles.add(new Article(
@@ -67,11 +67,13 @@ public class ViewAllArticlesController {
     }
 
     private void setupRadioButtonHandlers() {
+        // List of all category radio buttons
         List<RadioButton> radioButtons = List.of(
                 healthRadio, technologyRadio, politicsRadio, businessRadio, scienceRadio,
                 sportRadio, entertainmentRadio, environmentRadio, crimeRadio, educationRadio, weatherRadio, otherRadio
         );
 
+        // Add action listeners to each radio button
         for (RadioButton radioButton : radioButtons) {
             radioButton.setOnAction(event -> {
                 clearOtherRadioButtons(radioButton, radioButtons);
@@ -80,6 +82,7 @@ public class ViewAllArticlesController {
         }
     }
 
+    // Clears all other radio buttons except the selected one.
     private void clearOtherRadioButtons(RadioButton selectedButton, List<RadioButton> radioButtons) {
         for (RadioButton radioButton : radioButtons) {
             if (radioButton != selectedButton) {
@@ -88,8 +91,10 @@ public class ViewAllArticlesController {
         }
     }
 
+    // Filters articles based on the selected category.
     private void filterArticlesByCategory(String category) {
         ObservableList<Article> filteredArticles = FXCollections.observableArrayList();
+        // Fetch articles matching the category from the database
         articlesCollection.find(new Document("category", category)).forEach(document -> {
             filteredArticles.add(new Article(
                     document.getInteger("id"),
@@ -97,8 +102,8 @@ public class ViewAllArticlesController {
                     document.getString("preview"),
                     document.getString("category"),
                     document.getString("link"),
-                    document.getDouble("averageRating"), // Add averageRating
-                    document.getInteger("ratingCount")   // Add ratingCount
+                    document.getDouble("averageRating"),
+                    document.getInteger("ratingCount")
             ));
         });
         AllArticlesTable.setItems(filteredArticles);
@@ -128,9 +133,11 @@ public class ViewAllArticlesController {
     public void viewArticle(ActionEvent event) throws IOException {
         Article selectedArticle = AllArticlesTable.getSelectionModel().getSelectedItem();
         if (selectedArticle != null) {
+            // Load the selected article and navigate to the detailed view
             ViewArticleController.loadArticle(selectedArticle);
             SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/User/ViewArticle.fxml");
         } else {
+            // Show a warning if no article is selected
             showAlert("No Article Selected", "Please select an article to view.");
         }
     }

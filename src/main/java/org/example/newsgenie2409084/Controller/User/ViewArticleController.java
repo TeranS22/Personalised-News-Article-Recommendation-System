@@ -23,6 +23,7 @@ public class ViewArticleController {
     @FXML
     private Button BackToAllArticles;
 
+    // Current article being viewed
     private static Article currentArticle;
     private Integer finalRating = 0;
 

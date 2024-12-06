@@ -27,6 +27,7 @@ public class RegistrationPageController {
             scienceRadio, sportRadio, entertainmentRadio, environmentRadio,
             crimeRadio, educationRadio, weatherRadio, otherRadio;
 
+    // Database instance for user operations
     private final DatabaseUsers databaseUsers = new DatabaseUsers();
 
     @FXML
@@ -35,28 +36,34 @@ public class RegistrationPageController {
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
 
+        // Validate input fields
         if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             AlertUtils.showError("Error", "All fields must be filled.");
             return;
         }
 
+        // Check if passwords match
         if (!password.equals(confirmPassword)) {
             AlertUtils.showError("Error", "Passwords do not match.");
             return;
         }
 
+        // Check if username is already taken
         if (databaseUsers.getUserByUsername(username) != null) {
             AlertUtils.showError("Error", "Username is already taken.");
             return;
         }
 
+        // Initialize and populate preferred categories
         Map<String, Integer> preferredCategories = initializePreferredCategories();
 
+        // Get selected preferences
         List<String> preferences = getUserPreferences();
         for (String category : preferences) {
             preferredCategories.put(category, 10);
         }
 
+        // Create and save the new user
         User user = new User(username, password, preferences, preferredCategories, null);
         databaseUsers.saveUser(user);
 
@@ -64,6 +71,7 @@ public class RegistrationPageController {
         SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/WelcomePage.fxml");
     }
 
+    // Gets the selected preferences from the radio buttons
     private List<String> getUserPreferences() {
         List<String> preferences = new ArrayList<>();
         if (healthRadio.isSelected()) preferences.add("Health");
@@ -81,6 +89,7 @@ public class RegistrationPageController {
         return preferences;
     }
 
+    // Initializes the preferred categories with default scores.
     private Map<String, Integer> initializePreferredCategories() {
         Map<String, Integer> preferredCategories = new HashMap<>();
         String[] categories = {"Health", "Technology", "Politics", "Business", "Science", "Sport",
@@ -91,8 +100,10 @@ public class RegistrationPageController {
         return preferredCategories;
     }
 
+
     @FXML
     private void handleResetRegistration(ActionEvent event) {
+        // Resets all fields and radio button selections on the registration form.
         usernameField.clear();
         passwordField.clear();
         confirmPasswordField.clear();

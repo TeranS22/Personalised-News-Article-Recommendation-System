@@ -42,8 +42,10 @@ public class RecommendedArticlesController {
     @FXML
     public Button BackToUserMenu;
 
+    // Current article which is being displayed
     private static Article currentArticle;
 
+    // Dependencies for recommending and managing articles
     private final RecommendArticles recommendArticles = new RecommendArticles();
     private final DatabaseUsers databaseUsers = new DatabaseUsers();
     private final DatabaseArticles databaseArticles = new DatabaseArticles();
@@ -57,6 +59,7 @@ public class RecommendedArticlesController {
             return;
         }
 
+        // Load the next recommended article once the platform is ready
         Platform.runLater(this::loadNextArticle);
     }
 
@@ -71,16 +74,19 @@ public class RecommendedArticlesController {
         currentArticle = recommendArticles.getNextRecommendedArticle(username);
 
         if (currentArticle != null) {
+            // Display article details
             ArticleHeading.setText(currentArticle.getName());
             ArticleCategory.setText(currentArticle.getCategory());
 
             WebEngine webEngine = ArticleWebView.getEngine();
             webEngine.load(currentArticle.getLink());
 
+            // Enable/disable appropriate buttons
             NextArticle.setDisable(true);
             SkipArticle.setDisable(false);
-            UserRating.setRating(0);
+            UserRating.setRating(0); // Reset rating stars
         } else {
+            // No articles available
             ArticleHeading.setText("No articles available.");
             ArticleCategory.setText("");
             ArticleWebView.getEngine().loadContent("<html><body><h1>No Content</h1></body></html>");
@@ -101,6 +107,7 @@ public class RecommendedArticlesController {
         if (currentArticle != null) {
             String username = SessionManager.getUsername();
             if (username != null) {
+                // Add the current article to the skipped list for the user
                 databaseUsers.addToSkippedArticles(username, currentArticle.getId());
             }
             UserRating.setRating(0);
@@ -116,9 +123,10 @@ public class RecommendedArticlesController {
     @FXML
     public void nextArticle() {
         if (currentArticle != null) {
-            int userRating = (int) UserRating.getRating();
+            int userRating = (int) UserRating.getRating(); // Get user rating
             String username = SessionManager.getUsername();
             if (username != null) {
+                // Update the user's read history
                 databaseUsers.updateUserReadHistory(
                     username,
                     currentArticle.getId(),
@@ -128,6 +136,7 @@ public class RecommendedArticlesController {
                     currentArticle.getCategory()
                 );
 
+                // Update the article's average rating and rating count
                 double currentAverageRating = currentArticle.getAverageRating();
                 int currentRatingCount = currentArticle.getRatingCount();
                 double newAverageRating = ((currentAverageRating * currentRatingCount) + userRating) / (currentRatingCount + 1);

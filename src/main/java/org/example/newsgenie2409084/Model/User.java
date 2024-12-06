@@ -24,7 +24,11 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' + ", preferences=" + preferences + ", preferredCategories=" + preferredCategories + ", readHistory=" + readHistory + '}';
+                "username='" + username + '\'' +
+                ", preferences=" + preferences +
+                ", preferredCategories=" + preferredCategories +
+                ", readHistory=" + readHistory +
+                '}';
     }
 
     public String getUsername() {
@@ -37,6 +41,34 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<String> getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(List<String> preferences) {
+        this.preferences = preferences;
+    }
+
+    public Map<String, Integer> getPreferredCategories() {
+        return preferredCategories;
+    }
+
+    public void setPreferredCategories(Map<String, Integer> preferredCategories) {
+        this.preferredCategories = preferredCategories;
+    }
+
+    public Map<String, Object> getReadHistory() {
+        return readHistory;
+    }
+
+    public void setReadHistory(Map<String, Object> readHistory) {
+        this.readHistory = readHistory;
     }
 
     public Document toDocument() {

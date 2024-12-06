@@ -44,6 +44,7 @@ public class ArticleFetcherController {
         String inputNumber = NumberOfArticlesToBeFetched.getText();
         String confirmation = confirmTextField.getText();
 
+        // Validate confirmation text
         if (!confirmation.equalsIgnoreCase("CONFIRM")) {
             showAlert(Alert.AlertType.ERROR, "Error", "Please type 'CONFIRM' to proceed.");
             return;
@@ -51,9 +52,10 @@ public class ArticleFetcherController {
 
         int articleCount;
         try {
+            // Validate the number of articles input
             articleCount = Integer.parseInt(inputNumber);
-            if (articleCount < 1 || articleCount > 40) {
-                showAlert(Alert.AlertType.ERROR, "Error", "Please enter a number between 1 and 40.");
+            if (articleCount < 1 || articleCount > 35) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Please enter a number between 1 and 35.");
                 return;
             }
         } catch (NumberFormatException e) {
@@ -61,8 +63,10 @@ public class ArticleFetcherController {
             return;
         }
 
+        // Fetch articles from the API
         fetchArticlesFromAPI(articleCount);
 
+        // Clear input fields after fetching articles
         NumberOfArticlesToBeFetched.clear();
         confirmTextField.clear();
     }
@@ -74,6 +78,7 @@ public class ArticleFetcherController {
 
         try {
             while (articlesFetched < articleCount) {
+                // Construct the API URL with pagination
                 String apiUrl = "https://api.currentsapi.services/v1/latest-news?language=en&limit=" +
                                 articleCount + "&page_number=" + currentPage + "&apiKey=" + API_KEY;
 
@@ -81,17 +86,20 @@ public class ArticleFetcherController {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
+                // Check the API response
                 int responseCode = connection.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     StringBuilder response = new StringBuilder();
                     String line;
 
+                    // Read the API response
                     while ((line = reader.readLine()) != null) {
                         response.append(line);
                     }
                     reader.close();
 
+                    // Save articles and update the fetch count
                     articlesFetched += saveArticles(response.toString(), articles, articleCount - articlesFetched);
 
                     currentPage++;
@@ -101,6 +109,7 @@ public class ArticleFetcherController {
                 }
             }
 
+            // Update the fetch count in the database
             databaseFetchCount.updateFetchCount(currentPage);
 
             showAlert(Alert.AlertType.INFORMATION, "Success", articles.size() + " new articles were fetched and saved.");
@@ -118,6 +127,7 @@ public class ArticleFetcherController {
         try {
             JSONObject jsonResponse = new JSONObject(response);
 
+            // Check if the response contains articles
             if (!jsonResponse.has("news")) {
                 showAlert(Alert.AlertType.WARNING, "No Articles", "No articles found in the API response.");
                 return 0;
@@ -125,6 +135,7 @@ public class ArticleFetcherController {
 
             JSONArray newsArray = jsonResponse.getJSONArray("news");
 
+            // Process each article in the response
             for (int i = 0; i < newsArray.length() && savedCount < remainingCount; i++) {
                 JSONObject articleJson = newsArray.getJSONObject(i);
 
@@ -133,10 +144,12 @@ public class ArticleFetcherController {
                 String link = articleJson.optString("url", "");
                 String source = articleJson.optString("source", "");
 
+                // Skip invalid or duplicate articles
                 if (existingUrls.contains(link) || link.isEmpty() || source.equalsIgnoreCase("einnews")) {
                     continue;
                 }
 
+                // Categorize and save the article
                 CategoriseArticles categoriser = new CategoriseArticles();
                 String category = categoriser.categorise(name, preview);
 

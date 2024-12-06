@@ -36,18 +36,22 @@ public class WelcomePageController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
+        // Validate that username and password fields are not empty
         if (username.isEmpty() || password.isEmpty()) {
             AlertUtils.showError("Error", "Username or password cannot be empty.");
             return;
         }
 
+        // Perform authentication on a background thread
         ThreadPoolExecutorService.getExecutorService().submit(() -> {
             boolean isAdmin = "Admin".equals(username) && "admin123".equals(password);
             boolean isValidUser = checkUserCredentials(username, password);
 
             if (isAdmin || isValidUser) {
+                // Store the username in the session
                 SessionManager.setUsername(username);
 
+                // Navigate to the appropriate menu on the JavaFX Application Thread
                 Platform.runLater(() -> {
                     try {
                         if (isAdmin) {
@@ -63,11 +67,13 @@ public class WelcomePageController {
                     }
                 });
             } else {
+                // Show an error message if credentials are invalid
                 Platform.runLater(() -> AlertUtils.showError("Error", "Invalid username or password."));
             }
         });
     }
 
+    // Validates the user's credentials by checking with the database.
     private boolean checkUserCredentials(String username, String password) {
         User user = databaseUser.getUserByUsername(username);
         return user != null && user.getPassword().equals(password);

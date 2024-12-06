@@ -44,7 +44,7 @@ public class UserMenuController {
     }
 
     public void LogOut(ActionEvent event) throws IOException {
-        SessionManager.clear();
+        SessionManager.clear(); // Clear the user's session
         SceneLoader.loadScene(event, "/org/example/newsgenie2409084/View/WelcomePage.fxml");
     }
 }

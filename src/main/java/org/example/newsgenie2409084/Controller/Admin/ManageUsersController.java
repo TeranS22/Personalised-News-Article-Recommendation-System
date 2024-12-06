@@ -25,11 +25,12 @@ public class ManageUsersController {
     private TableView<User> ManageUsersTableView;
 
     @FXML
-    private TableColumn<User, String> Username, UserPreferences;
+    private TableColumn<User, String> Username, UserPreferences, UserReadHistory;
 
     @FXML
     private TextField confirmTextField;
 
+    // Database handler and observable list for users
     private final DatabaseUsers databaseUser = new DatabaseUsers();
     private ObservableList<User> userList = FXCollections.observableArrayList();
 
@@ -37,7 +38,7 @@ public class ManageUsersController {
     public void initialize() {
         Username.setCellValueFactory(new PropertyValueFactory<>("username"));
         UserPreferences.setCellValueFactory(new PropertyValueFactory<>("preferences"));
-
+        UserReadHistory.setCellValueFactory(new PropertyValueFactory<>("readHistory"));
         loadUsers();
     }
 
@@ -49,6 +50,8 @@ public class ManageUsersController {
 
     @FXML
     public void deleteUser(ActionEvent event) {
+
+        // Get selected user
         User selectedUser = ManageUsersTableView.getSelectionModel().getSelectedItem();
 
         if (selectedUser == null) {
@@ -62,8 +65,9 @@ public class ManageUsersController {
             return;
         }
 
+        // Delete the user from the database and update the table
         databaseUser.deleteUser(selectedUser.getUsername());
-        userList.remove(selectedUser);
+        userList.remove(selectedUser); // From list
         AlertUtils.showSuccess("Success", "User deleted successfully.");
 
         confirmTextField.clear();

@@ -40,11 +40,13 @@ public class ManageArticlesController {
     @FXML
     private TextField confirmTextField;
 
+    // Database handler and observable list for articles
     private final DatabaseArticles databaseArticle = new DatabaseArticles();
     private ObservableList<Article> articleList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
+        // Set table columns to Article model properties
         ArticleID.setCellValueFactory(new PropertyValueFactory<>("id"));
         ArticleHeadline.setCellValueFactory(new PropertyValueFactory<>("name"));
         ArticlePreview.setCellValueFactory(new PropertyValueFactory<>("preview"));
@@ -52,6 +54,7 @@ public class ManageArticlesController {
         ArticleLink.setCellValueFactory(new PropertyValueFactory<>("link"));
         ArticleRating.setCellValueFactory(new PropertyValueFactory<>("averageRating"));
 
+        // Load articles into the table
         loadArticles();
     }
 
@@ -63,23 +66,28 @@ public class ManageArticlesController {
 
     @FXML
     public void deleteArticle(ActionEvent event) {
+        // Get the selected article from the table
         Article selectedArticle = ManageArticlesTableView.getSelectionModel().getSelectedItem();
 
+        // Check if an article is selected
         if (selectedArticle == null) {
             AlertUtils.showError("Error", "Please select an article to delete.");
             return;
         }
 
+        // Validate the confirmation text field
         String confirmation = confirmTextField.getText();
         if (!confirmation.equalsIgnoreCase("CONFIRM")) {
             AlertUtils.showError("Error", "Please type 'CONFIRM' to delete the article.");
             return;
         }
 
+        // Delete the article from the database and update the table
         databaseArticle.deleteArticle(selectedArticle.getId());
-        articleList.remove(selectedArticle);
+        articleList.remove(selectedArticle); // From list
         AlertUtils.showSuccess("Success", "Article deleted successfully.");
 
+        // Clear the confirmation text field
         confirmTextField.clear();
     }
 
